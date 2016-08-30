@@ -61,6 +61,14 @@
     relationship: many_to_one
     sql_on: practicians_practicetophsician.physician_id = entities_userprofile.id AND practicians_practicetophsician.practice_id = entities_userprofile.practice_id 
     fields: [account_type]
+    
+- view: user_type_formulas 
+  fields: 
+  - dimension: user_type
+    sql: 
+     CASE WHEN {is_elation_staff} = 0 AND {time_credentialed_date} IS NOT NULL AND {app_type} = 'emr' AND {emr_type} = 'practicing' THEN 'paid provider'
+          ELSE NULL 
+     END
 # - explore: access_accessaccountpreferences
 
 # - explore: access_accessregistrationaction
