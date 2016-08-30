@@ -32,9 +32,7 @@
 - explore: entities_userloginattempts  
 
 - view: entities_userloginattempts  
-
   fields:
-
   - dimension: id
     primary_key: true
     type: number
