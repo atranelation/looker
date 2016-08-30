@@ -36,6 +36,12 @@
     relationship: many_to_one
     sql_on: entities_userloginattempt.user_id = entities_userprofile.user_id
     fields: [time_credentialed_date, is_elation_staff]
+  - join: entities_practice
+    type: left_outer
+    relationship: many_to_one 
+    sql_on: entities_practice.id = entities_userprofile.practice_id
+    fields: [app_type, emr_type]
+    
 
 # - explore: access_accessaccountpreferences
 
