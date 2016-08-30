@@ -29,8 +29,10 @@
   - measure: count
     type: count
     
-- view: sign_ins
-  sql_table_name: el8_app_1.entities_userloginattempt
+- explore: entities_userloginattempts  
+
+- view: entities_userloginattempts  
+
   fields:
 
   - dimension: id
@@ -54,7 +56,7 @@
   - dimension: user_id
     type: number
     sql: ${TABLE}.user_id
-
+    
   - measure: count
     type: count
     drill_fields: [id]
