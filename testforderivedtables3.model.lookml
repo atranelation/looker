@@ -29,35 +29,7 @@
   - measure: count
     type: count
     
-- explore: entities_userloginattempts  
-
-- view: entities_userloginattempts  
-  fields:
-  - dimension: id
-    primary_key: true
-    type: number
-    sql: ${TABLE}.id
-
-  - dimension: login_type
-    type: string
-    sql: ${TABLE}.login_type
-
-  - dimension: success
-    type: yesno
-    sql: ${TABLE}.success
-
-  - dimension_group: time_attempted
-    type: time
-    timeframes: [time, date, week, month]
-    sql: ${TABLE}.time_attempted
-
-  - dimension: user_id
-    type: number
-    sql: ${TABLE}.user_id
-    
-  - measure: count
-    type: count
-    drill_fields: [id]
+- explore: entities_userloginattempt
 
 # - explore: access_accessaccountpreferences
 
