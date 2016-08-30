@@ -62,7 +62,6 @@
     sql_on: practicians_practicetophsician.physician_id = entities_userprofile.id AND practicians_practicetophsician.practice_id = entities_userprofile.practice_id 
     fields: [account_type]
     
-- view: user_type_formulas 
   fields: 
   - dimension: user_type
     sql: 
