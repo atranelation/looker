@@ -41,8 +41,26 @@
     relationship: many_to_one 
     sql_on: entities_practice.id = entities_userprofile.practice_id
     fields: [app_type, emr_type]
-    
-
+  - join: practicians_officestaff
+    type: left_outer
+    relationship: many_to_one 
+    sql_on: practicians_officestaff.id = entities_userprofile.id
+    fields: [id]
+  - join: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: auth_user.id=entities_userprofile.user_id
+    fields: [is_staff]  
+  - join: practicians_physician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: practicians_physician.id=entities_userprofile.id
+    fields: [id]  
+  - join: practicians_practicetophysician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: practicians_practicetophsician.physician_id = entities_userprofile.id AND practicians_practicetophsician.practice_id = entities_userprofile.practice_id 
+    fields: [account_type]
 # - explore: access_accessaccountpreferences
 
 # - explore: access_accessregistrationaction
