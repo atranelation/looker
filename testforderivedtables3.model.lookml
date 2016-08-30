@@ -30,6 +30,11 @@
     type: count
     
 - explore: entities_userloginattempt
+  joins:
+  - join: entities_userprofile
+    type: inner
+    relationship: many_to_one
+    sql_on: entities_userloginattempt.user_id = entities_userprofile.user_id
 
 # - explore: access_accessaccountpreferences
 
