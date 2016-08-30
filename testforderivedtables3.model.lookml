@@ -62,7 +62,54 @@
     sql_on: practicians_practicetophsician.physician_id = entities_userprofile.id AND practicians_practicetophsician.practice_id = entities_userprofile.practice_id 
     fields: [account_type]
     
+  fields: 
+  - dimension: user_id
+    type: number
+    sql: entities_userloginattempt.user_id
 
+  - dimension: time_attempted_date
+    type: [date, week, month, year]
+    sql: entities_userloginattempt.time_attempted
+
+  - dimension: time_credentialed_date
+    type: [date, week, month, year]
+    sql: entities_userprofile.time_credentialed
+    
+  - dimension: is_elation_staff
+    type: yesno
+    sql: entities_userprofile.is_elation_staff
+  
+  - dimension: officestaffID
+    type: number
+    sql: practicians_officestaff.id
+
+  - dimension: is_staff
+    type: yesno
+    sql: auth_user.is_staff
+    
+  - dimension: physicianID
+    type: number
+    sql: practicians_physician.id
+
+  - dimension: account_type
+    type: string
+    sql: practicians_physician.account_type
+
+  - dimension: emr_type
+    type: string
+    sql: entities_practice.emr_type
+  
+  - dimension: emr_type
+    type: string
+    sql: entities_practice.emr_type
+  
+    
+  - dimension: user_type
+    sql: 
+     CASE WHEN {is_elation_staff} = 0 AND {time_credentialed_date} IS NOT NULL AND {app_type} = 'emr' AND {emr_type} = 'practicing' THEN 'paid provider'
+          ELSE NULL 
+     END
+ 
 # - explore: access_accessaccountpreferences
 
 # - explore: access_accessregistrationaction
