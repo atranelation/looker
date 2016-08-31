@@ -69,7 +69,7 @@
     
   - dimension: is_office_staff 
     type: yesno
-    sql: IF ${practicians_officestaff.id} IS NOT NULL THEN 1
+    sql: IF ${practicians_officestaff.id} IS NOT NULL
 
   - measure: count
     type: count
