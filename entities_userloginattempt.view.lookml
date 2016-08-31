@@ -31,6 +31,9 @@
   - dimension: user_id
     type: number
     sql: ${TABLE}.user_id
+  
+  - dimension: practice_name 
+    sql: ${entities_userprofile.practice_name}
 
   - measure: count
     type: count
