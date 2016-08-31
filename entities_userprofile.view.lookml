@@ -57,6 +57,9 @@
     type: time
     timeframes: [time, date, week, month]
     sql: ${TABLE}.verifyDate
+    
+  - dimension: practice_name 
+    sql: ${entities_practice.name}
 
   - measure: count
     type: count
