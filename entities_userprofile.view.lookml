@@ -87,7 +87,7 @@
       CASE WHEN ${TABLE}.is_elation_staff = 0 AND ${TABLE}.time_credentialed IS NOT NULL AND ${entities_practice.app_type} = 'emr' AND ${entities_practice.emr_type} = 'practicing' 
             AND ${auth_user.is_staff} = 0 AND (${practicians_practicetophysician.account_type} = 'regular' OR ${practicians_practicetophysician.account_type}) IS NULL THEN 'paid provider'
            WHEN  ${TABLE}.is_elation_staff = 0 AND ${TABLE}.time_credentialed IS NOT NULL AND ${entities_practice.app_type} = 'emr' AND ${entities_practice.emr_type} = 'practicing' 
-            AND ${TABLE}.is_staff = YES THEN 'staff'
+            AND ${TABLE}.is_staff = TRUE THEN 'staff'
         ELSE NULL
       END
       
