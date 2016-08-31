@@ -35,7 +35,7 @@
     type: inner
     relationship: many_to_one
     sql_on: entities_userloginattempt.user_id = entities_userprofile.user_id
-    fields: [time_credentialed_date, is_elation_staff]
+    fields: [time_credentialed_date, is_elation_staff, id]
   - join: entities_practice
     type: left_outer
     relationship: many_to_one 
