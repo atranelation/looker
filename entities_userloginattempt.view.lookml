@@ -37,5 +37,5 @@
 
   - measure: count
     type: count
-    drill_fields: [id]
+    drill_fields: [practice_name]
 
