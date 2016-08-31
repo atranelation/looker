@@ -86,7 +86,7 @@
     sql: 
       CASE WHEN ${TABLE}.is_elation_staff = 0 AND ${entities_practice.app_type} = 'emr' AND ${entities_practice.emr_type} = 'practicing' 
             AND ${auth_user.is_staff} = 0 AND ${practicians_practicetophysician.account_type} = 'regular' THEN 'paid provider'
-           WHEN ${practicians_officestaff.id} IS NOT NULL AND ${TABLE}.is_elation_staff = 0 AND ${TABLE}.time_credentialed IS NOT NULL AND ${entities_practice.app_type} = 'emr' AND ${entities_practice.emr_type} = 'practicing' THEN 'staff'
+           WHEN ${practicians_officestaff.id} IS NOT NULL AND ${TABLE}.is_elation_staff = 0 AND ${entities_practice.app_type} = 'emr' AND ${entities_practice.emr_type} = 'practicing' THEN 'staff'
            WHEN ${entities_practice.app_type} = 'access' OR ${entities_practice.emr_type} = 'passport' THEN 'free provider'
            WHEN ${entities_practice.app_type} = 'passport' THEN 'patient'
         ELSE NULL
