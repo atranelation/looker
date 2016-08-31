@@ -32,7 +32,10 @@
     type: number
     sql: ${TABLE}.user_id
 
+  - dimension: practice_name 
+    sql: ${entities_practice.name}
+
   - measure: count
     type: count
-    drill_fields: [id]
+    drill_fields: [id, practice_name]
 
