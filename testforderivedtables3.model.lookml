@@ -54,7 +54,7 @@
   - join: practicians_practicetophysician
     type: left_outer
     relationship: many_to_one
-    sql_on: practicians_practicetophsician.physician_id = entities_userprofile.id AND practicians_practicetophsician.practice_id = entities_userprofile.practice_id 
+    sql_on: practicians_practicetophysician.physician_id = entities_userprofile.id AND practicians_practicetophysician.practice_id = entities_userprofile.practice_id 
     fields: [account_type]
     
 
