@@ -71,6 +71,17 @@
     type: yesno
     sql: ${practicians_officestaff.id} IS NOT NULL
 
+  - dimension: is_staff 
+    type: yesno
+    sql: ${auth_user.is_staff}
+    
+  - dimension: is_physician
+    type: yesno
+    sql: ${practicians_physician.id} IS NOT NULL
+
+  - dimension: account_type
+    sql: ${practicians_practicetophysician.account_type}
+
   - measure: count
     type: count
     drill_fields: [id]
