@@ -88,8 +88,6 @@
             AND ${auth_user.is_staff} = 0 AND (${practicians_practicetophysician.account_type} = 'regular' OR ${practicians_practicetophysician.account_type}) IS NULL THEN 'paid provider'
            WHEN  ${TABLE}.is_elation_staff = 0 AND ${TABLE}.time_credentialed IS NOT NULL AND ${entities_practice.app_type} = 'emr' AND ${entities_practice.emr_type} = 'practicing' 
             AND ${practicians_officestaff.id} IS NOT NULL THEN 'staff'
-           WHEN ${entities_practice.app_type} = 'access' AND ${entities_practice.emr_type} = 'passport' THEN 'free provider'
-           WHEN ${entities_practice.app_type} = 'passport'
         ELSE NULL
       END
       
