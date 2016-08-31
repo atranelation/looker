@@ -28,9 +28,13 @@
   
   - measure: count
     type: count
-    
-- explore: entities_userprofile
+
+- explore: entities_userloginattempt
   joins:
+  - join: entities_userprofile
+    type: left_outer
+    relationship: many_to_one
+    sql_on: entities_userloginattempt.user_id = entities_userprofile.user_id AND success = 1
   - join: entities_practice
     type: left_outer
     relationship: many_to_one 
@@ -56,9 +60,9 @@
     relationship: many_to_one
     sql_on: practicians_practicetophysician.physician_id = entities_userprofile.id AND practicians_practicetophysician.practice_id = entities_userprofile.practice_id 
     fields: [account_type]
-    
+  
 
- 
+
 # - explore: access_accessaccountpreferences
 
 # - explore: access_accessregistrationaction
