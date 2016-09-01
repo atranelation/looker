@@ -34,7 +34,16 @@
   
   - dimension: practice_name 
     sql: ${entities_userprofile.practice_name}
-
+    
+  - dimension: physician_name
+    sql: CONCAT(${practicians_physician.first_name}, ${practicians_physician.last_name})  
+    
+  - dimension: user_type
+    sql: ${entities_userprofile.user_type}
+    
+  - dimension: physician_specialty
+    sql: ${shareable_medicalspecialty.name}
+  
   - measure: count
     type: count
     drill_fields: [practice_name]
@@ -42,4 +51,4 @@
   - measure: unique_user_count
     type: count_distinct
     sql: ${TABLE}.user_id
-    drill_fields: [practice_name]
+    drill_fields: [user_type, physician_name, physician_specialty, practice_name]

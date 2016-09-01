@@ -60,6 +60,10 @@
     relationship: many_to_one
     sql_on: practicians_practicetophysician.physician_id = entities_userprofile.id AND practicians_practicetophysician.practice_id = entities_userprofile.practice_id 
     fields: [account_type]
+  - join: shareable_medicalspecialty
+    type: left_outer
+    relationship: many_to_one
+    sql_on: shareable_medicalspecialty.id = practicians_physician.id
   
 - explore: entities_userprofile
   joins:
@@ -88,6 +92,10 @@
     relationship: many_to_one
     sql_on: practicians_practicetophysician.physician_id = entities_userprofile.id AND practicians_practicetophysician.practice_id = entities_userprofile.practice_id 
     fields: [account_type]
+  - join: shareable_medicalspecialty
+    type: left_outer
+    relationship: many_to_one
+    sql_on: shareable_medicalspecialty.id = practicians_physician.id
 
 
 # - explore: access_accessaccountpreferences

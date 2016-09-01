@@ -91,7 +91,13 @@
            WHEN ${entities_practice.app_type} = 'passport' THEN 'patient'
         ELSE NULL
       END
-      
+
+  - dimension: physician_name
+    sql: CONCAT(${practicians_physician.first_name}, ${practicians_physician.last_name})  
+    
+  - dimension: physician_specialty
+    sql: ${shareable_medicalspecialty.name}
+  
   - measure: count
     type: count
     drill_fields: [id, practice_name]
