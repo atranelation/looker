@@ -39,3 +39,6 @@
     type: count
     drill_fields: [practice_name]
 
+  - measure: unique_count
+    type: count_distinct
+    drill_fields: [practice_name]
