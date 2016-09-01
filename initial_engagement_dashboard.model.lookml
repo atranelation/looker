@@ -34,7 +34,7 @@
 - view: appointments
   derived_table:
     sql:
-      SELECT appt.id as `appointment_id`, appt.practice_id, appt.physician_user_id, c.recordDate, appt.appt_time, appt.duration, s.status 
+      SELECT appt.id as `appointment_id`, appt.practice_id, appt.physician_user_id, al.recordDate, appt.appt_time, appt.duration, s.status 
         FROM scheduler_appointment appt 
           JOIN auditlogging_actionlog al ON al.id=appt.createLog_id
           JOIN scheduler_appointmentstatus sas ON sas.appointment_id=appt.id 
