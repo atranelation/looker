@@ -39,6 +39,7 @@
     type: count
     drill_fields: [practice_name]
 
-  - measure: unique_count
+  - measure: unique_user_count
     type: count_distinct
+    sql: ${TABLE}.user_id
     drill_fields: [practice_name]
