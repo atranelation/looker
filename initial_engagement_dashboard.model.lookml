@@ -41,7 +41,42 @@
           LEFT JOIN scheduler_appointmentstatus sas2 ON sas2.appointment_id=appt.id AND (sas.id < sas2.id OR sas.id = sas2.id) 
     sql_trigger_value: SELECT CURDATE()
     indexes: [recordDate, status, practice_id, physician_user_id]
+    
+  fields:
+  - dimension: appointment_id
+    type: number
+    primary_key: true
+    sql: ${TABLE}.appointment_id
+    
+  - dimension: practice_id
+    type: number
+    sql: ${TABLE}.practice_id
+    
+  - dimension: physician_user_id
+    type: number
+    sql: ${TABLE}.physician_user_id
+    
+  - dimension_group: recordDate
+    type: time
+    timeframes: [date, month, year]
+    sql: ${TABLE}.recordDate
+    
+  - dimension_group: appointment_time
+    type: time
+    timeframes: [date, month, year]
+    sql: ${TABLE}.appt_time
 
+  - dimension: duration
+    type: number
+    sql: ${TABLE}.duration
+    
+  - dimension: status
+    type: string
+    sql: ${TABLE}.status
+    
+  - measure: count
+    type: count
+    
 - explore: entities_userloginattempt
   joins:
   - join: entities_userprofile
