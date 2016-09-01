@@ -28,6 +28,19 @@
   
   - measure: count
     type: count
+    
+- explore: appointments
+
+- view: appointments
+  derived_table:
+    sql:
+      SELECT appt.id as `appointment_id`, appt.practice_id, appt.physician_user_id, c.recordDate, appt.appt_time, appt.duration, s.status 
+        FROM scheduler_appointment appt 
+          JOIN auditlogging_actionlog al ON al.id=appt.createLog_id
+          JOIN scheduler_appointmentstatus sas ON sas.appointment_id=appt.id 
+          LEFT JOIN scheduler_appointmentstatus sas2 ON sas2.appointment_id=appt.id AND (sas.id < sas2.id OR sas.id = sas2.id) 
+    sql_trigger_value: SELECT CURDATE()
+    indexes: [recordDate, status, practice_id, physician_user_id]
 
 - explore: entities_userloginattempt
   joins:
