@@ -38,7 +38,7 @@
   - join: entities_practice
     type: left_outer
     relationship: many_to_one 
-    sql_on: entities_practice.id = entities_userprofile.practice_id AND emr_type != 'trial' AND emr_type != 'el8internal' AND emr_type != 'advisor'
+    sql_on: entities_practice.id = entities_userprofile.practice_id
     fields: [app_type, emr_type, name]
   - join: practicians_officestaff
     type: left_outer
