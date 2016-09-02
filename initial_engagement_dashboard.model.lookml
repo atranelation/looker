@@ -160,9 +160,9 @@
     relationship: many_to_one 
     sql_on: patients_document.id = messaging_threadmessage.thread_id AND patients_document.deletelog_id IS NULL 
     
-- explore: prescriptions
+- explore: reports
 
-- view: prescriptions
+- view: reports
   derived_table:
     sql:
       SELECT pd.id, pd.authoring_practice_id, cd.documentDate AS `report_date`, al1.recordDate AS `create_date`, al2.recordDate AS `sign_date`, 
