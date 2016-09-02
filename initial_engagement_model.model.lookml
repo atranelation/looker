@@ -30,7 +30,41 @@
     type: count
     
 - explore: appointments
-
+  joins: 
+  - join: entities_userprofile
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${appointments.physician_user_id} = ${entities_userprofile.id}
+  - join: entities_practice
+    type: left_outer
+    relationship: many_to_one 
+    sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
+    fields: [app_type, emr_type, name]
+  - join: practicians_officestaff
+    type: left_outer
+    relationship: many_to_one 
+    sql_on: ${practicians_officestaff.id} = ${entities_userprofile.id}
+    fields: [id]
+  - join: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${auth_user.id} = ${entities_userprofile.user_id}
+    fields: [is_staff]  
+  - join: practicians_physician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${practicians_physician.id} = ${entities_userprofile.id}
+    fields: [id]  
+  - join: practicians_practicetophysician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${practicians_practicetophysician.physician_id} = ${entities_userprofile.id} AND ${practicians_practicetophysician.practice_id} = ${entities_userprofile.practice_id} 
+    fields: [account_type]
+  - join: shareable_medicalspecialty
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
+    
 - view: appointments
   derived_table:
     sql:
