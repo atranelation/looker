@@ -165,7 +165,7 @@
 - view: reports
   derived_table:
     sql:
-      SELECT pd.id, pd.authoring_practice_id, cd.documentDate AS `report_date`, al1.recordDate AS `create_date`, al2.recordDate AS `sign_date`, 
+      SELECT pd.id, pd.authoring_practice_id, pd.documentDate AS `report_date`, al1.recordDate AS `create_date`, al2.recordDate AS `sign_date`, 
         rlrg.id IS NOT NULL AS `contains_lab_values`
         FROM reports_report rr 
           JOIN patients_document pd ON pd.id = rr.doc_id 
