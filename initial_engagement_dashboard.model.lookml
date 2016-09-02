@@ -34,7 +34,7 @@
 - view: appointments
   derived_table:
     sql:
-      SELECT appt.id as `appointment_id`, appt.practice_id, appt.physician_user_id, al.recordDate, appt.appt_time, appt.duration, sas.status 
+      SELECT appt.id AS `appointment_id`, appt.practice_id, appt.physician_user_id, al.recordDate, appt.appt_time, appt.duration, sas.status 
         FROM scheduler_appointment appt 
           JOIN auditlogging_actionlog al ON al.id=appt.createLog_id
           JOIN scheduler_appointmentstatus sas ON sas.appointment_id=appt.id 
@@ -144,7 +144,70 @@
     type: left_outer
     relationship: many_to_one
     sql_on: shareable_medicalspecialty.id = practicians_physician.id
+    
+- explore: filemgr_incomingfilegroup
+  joins:
+  - join: entities_practice
+    type: inner
+    relationship: many_to_one 
+    sql_on: entities_practice.id = filemgr_incomingfilegroup.practice_id
+    fields: [name, specialty, city, state, zip, enterprise_id]
+  
+- explore: messaging_threadmessage
+  joins:
+  - join: patients_document
+    type: inner
+    relationship: many_to_one 
+    sql_on: patients_document.id = messaging_threadmessage.thread_id AND patients_document.deletelog_id IS NULL 
+    
+- explore: prescriptions
 
+- view: prescriptions
+  derived_table:
+    sql:
+      SELECT pd.id, pd.authoring_practice_id, cd.documentDate AS `report_date`, al1.recordDate AS `create_date`, al2.recordDate AS `sign_date`, 
+        rlrg.id IS NOT NULL AS `contains_lab_values`
+        FROM reports_report rr 
+          JOIN patients_document pd ON pd.id = rr.doc_id 
+          JOIN auditlogging_actionlog al1 on al1.id = pd.createLog_id 
+          JOIN auditlogging_actionlog al2 on al2.id = pd.signLog_id 
+          LEFT JOIN reports_labresultgrid rlrg on rlrg.labReport_id = pd.id 
+    sql_trigger_value: SELECT CURDATE()
+    indexes: [create_date, sign_date, report_date]
+    
+  fields:
+  - dimension: id
+    type: number
+    primary_key: true
+    sql: ${TABLE}.id
+    
+  - dimension: authoring_practice_id
+    type: number
+    sql: ${TABLE}.authoring_practice_id
+    
+  - dimension_group: report_date
+    type: time
+    timeframes: [date, month, year]
+    sql: ${TABLE}.report_date
+    
+  - dimension_group: create_date
+    type: time
+    timeframes: [date, month, year]
+    sql: ${TABLE}.create_date
+
+  - dimension_group: sign_date
+    type: time
+    timeframes: [date, month, year]
+    sql: ${TABLE}.sign_date
+
+  - dimension: contains_lab_values
+    type: yesno
+    sql: ${TABLE}.contains_lab_values
+
+  - measure: count
+    type: count
+    
+    
 
 # - explore: access_accessaccountpreferences
 
@@ -539,8 +602,6 @@
 # - explore: filemgr_handout_tags
 
 # - explore: filemgr_importedfile
-
-# - explore: filemgr_incomingfilegroup
 
 # - explore: filemgr_patientphoto
 
