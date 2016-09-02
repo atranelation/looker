@@ -82,75 +82,75 @@
   - join: entities_userprofile
     type: left_outer
     relationship: many_to_one
-    sql_on: entities_userloginattempt.user_id = entities_userprofile.user_id AND success = 1
+    sql_on: ${entities_userloginattempt.user_id} = ${entities_userprofile.user_id} AND success = 1
   - join: entities_practice
     type: left_outer
     relationship: many_to_one 
-    sql_on: entities_practice.id = entities_userprofile.practice_id
+    sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
     fields: [app_type, emr_type, name]
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 
-    sql_on: practicians_officestaff.id = entities_userprofile.id
+    sql_on: ${practicians_officestaff.id} = ${entities_userprofile.id}
     fields: [id]
   - join: auth_user
     type: left_outer
     relationship: many_to_one
-    sql_on: auth_user.id=entities_userprofile.user_id
+    sql_on: ${auth_user.id} = ${entities_userprofile.user_id}
     fields: [is_staff]  
   - join: practicians_physician
     type: left_outer
     relationship: many_to_one
-    sql_on: practicians_physician.id=entities_userprofile.id
+    sql_on: ${practicians_physician.id} = ${entities_userprofile.id}
     fields: [id]  
   - join: practicians_practicetophysician
     type: left_outer
     relationship: many_to_one
-    sql_on: practicians_practicetophysician.physician_id = entities_userprofile.id AND practicians_practicetophysician.practice_id = entities_userprofile.practice_id 
+    sql_on: ${practicians_practicetophysician.physician_id} = ${entities_userprofile.id} AND ${practicians_practicetophysician.practice_id} = ${entities_userprofile.practice_id} 
     fields: [account_type]
   - join: shareable_medicalspecialty
     type: left_outer
     relationship: many_to_one
-    sql_on: shareable_medicalspecialty.id = practicians_physician.id
+    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
   
 - explore: entities_userprofile
   joins:
   - join: entities_practice
     type: left_outer
     relationship: many_to_one 
-    sql_on: entities_practice.id = entities_userprofile.practice_id
+    sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
     fields: [app_type, emr_type, name]
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 
-    sql_on: practicians_officestaff.id = entities_userprofile.id
+    sql_on: ${practicians_officestaff.id} = ${entities_userprofile.id}
     fields: [id]
   - join: auth_user
     type: left_outer
     relationship: many_to_one
-    sql_on: auth_user.id=entities_userprofile.user_id
+    sql_on: ${auth_user.id} = ${entities_userprofile.user_id}
     fields: [is_staff]  
   - join: practicians_physician
     type: left_outer
     relationship: many_to_one
-    sql_on: practicians_physician.id=entities_userprofile.id
+    sql_on: ${practicians_physician.id} = ${entities_userprofile.id}
     fields: [id]  
   - join: practicians_practicetophysician
     type: left_outer
     relationship: many_to_one
-    sql_on: practicians_practicetophysician.physician_id = entities_userprofile.id AND practicians_practicetophysician.practice_id = entities_userprofile.practice_id 
+    sql_on: ${practicians_practicetophysician.physician_id} = ${entities_userprofile.id} AND ${practicians_practicetophysician.practice_id} = ${entities_userprofile.practice_id} 
     fields: [account_type]
   - join: shareable_medicalspecialty
     type: left_outer
     relationship: many_to_one
-    sql_on: shareable_medicalspecialty.id = practicians_physician.id
+    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
     
 - explore: filemgr_incomingfilegroup
   joins:
   - join: entities_practice
     type: inner
     relationship: many_to_one 
-    sql_on: entities_practice.id = filemgr_incomingfilegroup.practice_id
+    sql_on: ${entities_practice.id} = ${filemgr_incomingfilegroup.practice_id}
     fields: [name, specialty, city, state, zip, enterprise_id]
   
 - explore: messaging_threadmessage
@@ -158,7 +158,7 @@
   - join: patients_document
     type: inner
     relationship: many_to_one 
-    sql_on: patients_document.id = messaging_threadmessage.thread_id AND patients_document.deletelog_id IS NULL 
+    sql_on: ${patients_document.id} = ${messaging_threadmessage.thread_id} AND ${patients_document.delete_log_id} IS NULL 
     
 - explore: reports
 

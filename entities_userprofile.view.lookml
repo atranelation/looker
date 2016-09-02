@@ -2,10 +2,10 @@
   sql_table_name: el8_app_1.entities_userprofile
   fields:
 
-#   - dimension: id
-#     primary_key: true
-#     type: number
-#     sql: ${TABLE}.id
+  - dimension: id
+    primary_key: true
+    type: number
+    sql: ${TABLE}.id
 # 
 #   - dimension: emergency_on
 #     type: yesno
@@ -18,10 +18,11 @@
   - dimension: is_elation_staff
     type: yesno
     sql: ${TABLE}.is_elation_staff
-# 
-#   - dimension: is_emergency
-#     type: yesno
-#     sql: ${TABLE}.is_emergency
+
+  - dimension: is_emergency
+    type: yesno
+    hidden: true
+    sql: ${TABLE}.is_emergency
 
   - dimension: is_practice_admin
     type: yesno
