@@ -17,6 +17,7 @@
 # 
   - dimension: is_elation_staff
     type: yesno
+    hidden: true
     sql: ${TABLE}.is_elation_staff
 
   - dimension: is_emergency
@@ -26,6 +27,7 @@
 
   - dimension: is_practice_admin
     type: yesno
+    hidden: true
     sql: ${TABLE}.is_practice_admin
 
 #   - dimension: opt_email_daily
@@ -101,5 +103,5 @@
   
   - measure: count
     type: count
-    drill_fields: [id, practice_name]
+    drill_fields: [id, practice_name, user_type, physician_specialty]
 
