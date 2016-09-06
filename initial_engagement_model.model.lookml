@@ -8,7 +8,7 @@
 - view: signed_visits
   derived_table:
     sql:
-      SELECT recordDate, d.id AS documentID, d.user_id AS user_id
+      SELECT recordDate, d.id AS documentID, a.user_id AS user_id
         FROM patients_document d
         LEFT JOIN auditlogging_actionlog a on d.signLog_id=a.id
           WHERE d.document_type=24 AND d.deleteLog_id is NULL
