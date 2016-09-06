@@ -33,6 +33,7 @@
   
   - measure: count
     type: count
+    drill_fields: [userid]
     
 - explore: appointments
   joins: 
