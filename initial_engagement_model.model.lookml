@@ -8,18 +8,23 @@
 - view: signed_visits
   derived_table:
     sql:
-      SELECT recordDate, d.id AS documentID
+      SELECT recordDate, d.id AS documentID, d.user_id AS user_id
         FROM patients_document d
         LEFT JOIN auditlogging_actionlog a on d.signLog_id=a.id
           WHERE d.document_type=24 AND d.deleteLog_id is NULL
     sql_trigger_value: SELECT CURDATE()
-    indexes: [recordDate, documentID]
+    indexes: [recordDate, user_id, documentID]
 
   fields:
   - dimension: documentID
     type: number                 
+    hidden: true
     primary_key: true
     sql: ${TABLE}.documentID
+    
+  - dimension: userid
+    type: number                 
+    sql: ${TABLE}.user_id
     
   - dimension_group: recordDate
     type: time
