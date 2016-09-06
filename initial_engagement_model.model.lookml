@@ -34,7 +34,7 @@
   - join: entities_userprofile
     type: left_outer
     relationship: many_to_one
-    sql_on: ${appointments.physician_user_id} = ${entities_userprofile.id}
+    sql_on: ${appointments.physician_user_id} = ${entities_userprofile.user_id}
   - join: entities_practice
     type: left_outer
     relationship: many_to_one 
@@ -111,7 +111,7 @@
   - dimension_group: timecredentialed
     type: time
     timeframes: [time, date, week, month]
-    sql: .time_credentialed}
+    sql: ${entities_userprofile.timecredentialed_date}
     
   - dimension: practice_name 
     sql: ${entities_practice.name}
