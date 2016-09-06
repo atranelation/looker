@@ -108,9 +108,27 @@
     type: string
     sql: ${TABLE}.status
     
+  - dimension_group: timecredentialed
+    type: time
+    timeframes: [time, date, week, month]
+    sql: .time_credentialed}
+    
+  - dimension: practice_name 
+    sql: ${entities_practice.name}
+
+  - dimension: physician_name
+    sql: CONCAT(${practicians_physician.first_name}, ${practicians_physician.last_name})  
+    
+  - dimension: user_type    
+    sql: ${entities_userprofile.user_type}
+    
+  - dimension: physician_specialty
+    sql: ${shareable_medicalspecialty.name}
+  
+    
   - measure: count
     type: count
-    drill_fields: [appointment_time, practice_name, physician_name, user_type, physician_specialty]
+    drill_fields: [appointment_time, timecredentialed, practice_name, physician_name, user_type, physician_specialty]
     
 - explore: entities_userloginattempt
   joins:
