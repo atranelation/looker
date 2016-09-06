@@ -110,6 +110,7 @@
     
   - measure: count
     type: count
+    drill_fields: [appointment_time, practice_name, physician_name, user_type, physician_specialty]
     
 - explore: entities_userloginattempt
   joins:
@@ -240,7 +241,7 @@
 
   - measure: count
     type: count
-    drill_fields: [id, practice_name, physician_name, user_type, physician_specialty]
+    drill_fields: [id]
     
     
 
