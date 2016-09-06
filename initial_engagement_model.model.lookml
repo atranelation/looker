@@ -240,6 +240,7 @@
 
   - measure: count
     type: count
+    drill_fields: [id, practice_name, physician_name, user_type, physician_specialty]
     
     
 

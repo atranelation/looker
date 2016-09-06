@@ -75,6 +75,7 @@
     sql: ${practicians_officestaff.id} IS NOT NULL
 
   - dimension: is_staff 
+    hidden: true
     type: yesno
     sql: ${auth_user.is_staff}
     
@@ -103,5 +104,5 @@
   
   - measure: count
     type: count
-    drill_fields: [id, practice_name, user_type, physician_specialty]
+    drill_fields: [id, practice_name, physician_name, user_type, physician_specialty]
 
