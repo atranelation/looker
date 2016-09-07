@@ -8,7 +8,7 @@
   - join: entities_userprofile
     type: left_outer
     relationship: many_to_one
-    sql_on: ${signed_visits.userid} = ${entities_userprofile.user_id}
+    sql_on: ${signed_visits.user_id} = ${entities_userprofile.user_id}
   - join: entities_practice
     type: left_outer
     relationship: many_to_one 
@@ -61,10 +61,21 @@
     primary_key: true
     sql: ${TABLE}.documentID
     
-  - dimension: userid
+  - dimension: user_id
     type: number                 
     sql: ${TABLE}.user_id
     
+  - dimension: practice_id
+    type: number                 
+    sql: ${entities_practice.id}
+    
+  - dimension: physician_name
+    type: string                 
+    sql: CONCAT(${practicians_physician.first_name}, ${practicians_physician.last_name})  
+    
+  - dimension: practice_name 
+    sql: ${entities_practice.practice_name}
+
   - dimension: implementation_manager
     type: string                 
     sql: CONCAT(${implmanager.first_name}, ' ', ${implmanager.last_name})
@@ -74,14 +85,19 @@
     timeframes: [date, month]
     sql: ${TABLE}.recordDate
   
+  - dimension_group: timecredentialed
+    type: time
+    timeframes: [time, date, week, month]
+    sql: ${entities_userprofile.timecredentialed_date}
+
   - measure: signed_visits_count
     type: count
-    drill_fields: [userid, implementation_manager]
+    drill_fields: [user_id, physician_name, timecredentialed, practice_id, practice_name, implementation_manager]
   
   - measure: unique_users
     type: count_distinct
     sql: ${TABLE}.user_id
-    drill_fields: [userid, implementation_manager]
+    drill_fields: [user_id, physician_name, timecredentialed, practice_id, practice_name, implementation_manager]
 
 
 - explore: appointments
