@@ -203,6 +203,7 @@
     drill_fields: [appointment_time, timecredentialed, practice_name, physician_name, user_type, physician_specialty]
     
 - explore: entities_userloginattempt
+  label: 'Log Ins'
   joins:
   - join: entities_userprofile
     type: left_outer
@@ -245,7 +246,7 @@
     fields: [first_name, last_name]
   
 - explore: entities_userprofile
-  label: 'users'
+  label: 'Users'
   joins:
   - join: entities_practice
     type: left_outer
