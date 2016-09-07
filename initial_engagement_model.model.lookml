@@ -282,9 +282,6 @@
     sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
     fields: [first_name, last_name]
 
-  fields: 
-    
-    
 - explore: filemgr_incomingfilegroup
   joins:
   - join: entities_practice
