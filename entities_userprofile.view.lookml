@@ -86,6 +86,7 @@
     sql: ${auth_user.is_active}
 
   - dimension: is_physician
+    hidden: true
     type: yesno
     sql: ${practicians_physician.id} IS NOT NULL
 
@@ -104,7 +105,7 @@
       END
 
   - dimension: physician_name
-    sql: CONCAT(${practicians_physician.first_name}, ${practicians_physician.last_name})  
+    sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
     
   - dimension: physician_specialty
     sql: ${shareable_medicalspecialty.name}

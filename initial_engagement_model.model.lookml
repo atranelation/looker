@@ -71,7 +71,7 @@
     
   - dimension: physician_name
     type: string                 
-    sql: CONCAT(${practicians_physician.first_name}, ${practicians_physician.last_name})  
+    sql: CONCAT(${practicians_physician.first_name}, ' ',  ${practicians_physician.last_name})  
     
   - dimension: practice_name 
     sql: ${entities_practice.practice_name}
@@ -188,7 +188,7 @@
     sql: ${entities_practice.practice_name}
 
   - dimension: physician_name
-    sql: CONCAT(${practicians_physician.first_name}, ${practicians_physician.last_name})  
+    sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
     
   - dimension: user_type    
     sql: ${entities_userprofile.user_type}
@@ -236,6 +236,11 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
+  - join: auth_user2
+    from: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_practice.current_impl_manager_id} = ${auth_user2.id}
   
 - explore: entities_userprofile
   joins:
@@ -268,6 +273,12 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
+  - join: implmanager
+    from: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_practice.current_impl_manager_id} = ${implmanager.id}
+
     
 - explore: filemgr_incomingfilegroup
   joins:
