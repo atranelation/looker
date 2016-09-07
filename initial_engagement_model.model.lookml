@@ -77,7 +77,17 @@
   - measure: count
     type: count
     drill_fields: [userid, implementation_manager]
+  
+  - measure: appointment_count
+    type: count
+    drill_fields: [userid, implementation_manager]
     
+  - measure: unique_users
+    type: count_distinct
+    sql: ${TABLE}.userid
+    drill_fields: [userid, implementation_manager]
+
+
 - explore: appointments
   joins: 
   - join: entities_userprofile
