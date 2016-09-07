@@ -4,6 +4,45 @@
 - include: "*.dashboard.lookml"  # include all the dashboards
 
 - explore: signed_visits
+  joins: 
+  - join: entities_userprofile
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${signed_visits.userid} = ${entities_userprofile.user_id}
+  - join: entities_practice
+    type: left_outer
+    relationship: many_to_one 
+    sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
+    fields: [app_type, emr_type, name]
+  - join: practicians_officestaff
+    type: left_outer
+    relationship: many_to_one 
+    sql_on: ${practicians_officestaff.id} = ${entities_userprofile.id}
+    fields: [id]
+  - join: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${auth_user.id} = ${entities_userprofile.user_id}
+    fields: [is_staff]  
+  - join: practicians_physician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${practicians_physician.id} = ${entities_userprofile.id}
+    fields: [id]  
+  - join: practicians_practicetophysician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${practicians_practicetophysician.physician_id} = ${entities_userprofile.id} AND ${practicians_practicetophysician.practice_id} = ${entities_userprofile.practice_id} 
+    fields: [account_type]
+  - join: shareable_medicalspecialty
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
+  - join: implmanager
+    from: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_practice.current_impl_manager_id} = ${implmanager.id}
 
 - view: signed_visits
   derived_table:
@@ -25,6 +64,10 @@
   - dimension: userid
     type: number                 
     sql: ${TABLE}.user_id
+    
+  - dimension: implementation_manager
+    type: string                 
+    sql: ${}.first_name 
     
   - dimension_group: recordDate
     type: time
