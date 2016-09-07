@@ -47,7 +47,7 @@
 - view: signed_visits
   derived_table:
     sql:
-      SELECT recordDate, d.id AS documentID, a.user_id AS user_id
+      SELECT recordDate, d.id AS documentID, a.user_id AS user_id, d.documentDate As document_date
         FROM patients_document d
         LEFT JOIN auditlogging_actionlog a on d.signLog_id=a.id
           WHERE d.document_type=24 AND d.deleteLog_id is NULL
@@ -80,6 +80,11 @@
     type: time
     timeframes: [date, month]
     sql: ${TABLE}.recordDate
+    
+  - dimension_group: document_date
+    type: time
+    timeframes: [date, month]
+    sql: ${TABLE}.document_date
   
   - dimension_group: timecredentialed
     type: time
@@ -181,7 +186,7 @@
     type: string
     sql: ${TABLE}.status
     
-  - dimension_group: timecredentialed
+  - dimension_group: time_credentialed
     type: time
     timeframes: [time, date, week, month]
     sql: ${entities_userprofile.timecredentialed_date}
@@ -200,7 +205,7 @@
  
   - measure: count
     type: count
-    drill_fields: [appointment_time, timecredentialed, practice_name, physician_name, user_type, physician_specialty]
+    drill_fields: [appointment_time, time_credentialed, practice_name, physician_name, user_type, physician_specialty]
     
 - explore: entities_userloginattempt
   label: 'Log Ins'
