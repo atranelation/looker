@@ -245,6 +245,7 @@
     fields: [first_name, last_name]
   
 - explore: entities_userprofile
+  label: 'users'
   joins:
   - join: entities_practice
     type: left_outer
