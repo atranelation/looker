@@ -13,7 +13,7 @@
     type: left_outer
     relationship: many_to_one 
     sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
-    fields: [app_type, emr_type, name]
+    fields: [app_type, emr_type, practice_name]
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 
@@ -74,17 +74,13 @@
     timeframes: [date, month]
     sql: ${TABLE}.recordDate
   
-  - measure: count
+  - measure: signed_visits_count
     type: count
     drill_fields: [userid, implementation_manager]
   
-  - measure: appointment_count
-    type: count
-    drill_fields: [userid, implementation_manager]
-    
   - measure: unique_users
     type: count_distinct
-    sql: ${TABLE}.userid
+    sql: ${TABLE}.user_id
     drill_fields: [userid, implementation_manager]
 
 
@@ -98,7 +94,7 @@
     type: left_outer
     relationship: many_to_one 
     sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
-    fields: [app_type, emr_type, name]
+    fields: [app_type, emr_type, practice_name]
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 
@@ -173,7 +169,7 @@
     sql: ${entities_userprofile.timecredentialed_date}
     
   - dimension: practice_name 
-    sql: ${entities_practice.name}
+    sql: ${entities_practice.practice_name}
 
   - dimension: physician_name
     sql: CONCAT(${practicians_physician.first_name}, ${practicians_physician.last_name})  
@@ -199,7 +195,7 @@
     type: left_outer
     relationship: many_to_one 
     sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
-    fields: [app_type, emr_type, name]
+    fields: [app_type, emr_type, practice_name]
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 
@@ -231,7 +227,7 @@
     type: left_outer
     relationship: many_to_one 
     sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
-    fields: [app_type, emr_type, name]
+    fields: [app_type, emr_type, practice_name]
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 
@@ -263,7 +259,7 @@
     type: inner
     relationship: many_to_one 
     sql_on: ${entities_practice.id} = ${filemgr_incomingfilegroup.practice_id}
-    fields: [name, specialty, city, state, zip, enterprise_id]
+    fields: [practice_name, specialty, city, state, zip, enterprise_id]
   
 - explore: messaging_threadmessage
   joins:

@@ -59,7 +59,7 @@
     type: string
     sql: ${TABLE}.impl_doc_url
 
-  - dimension: name
+  - dimension: practice_name
     type: string
     sql: ${TABLE}.name
 

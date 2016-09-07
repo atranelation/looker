@@ -62,7 +62,7 @@
 #     sql: ${TABLE}.verifyDate
 #     
   - dimension: practice_name 
-    sql: ${entities_practice.name}
+    sql: ${entities_practice.practice_name}
   
   - dimension: emr_type 
     sql: ${entities_practice.emr_type}
