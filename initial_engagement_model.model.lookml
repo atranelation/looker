@@ -65,7 +65,7 @@
     type: number                 
     sql: ${TABLE}.user_id
     
-  - dimension: implementationmanager
+  - dimension: implementation_manager
     type: string                 
     sql: CONCAT(${implmanager.first_name}, ' ', ${implmanager.last_name})
     
