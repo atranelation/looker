@@ -109,7 +109,10 @@
     
   - dimension: physician_specialty
     sql: ${shareable_medicalspecialty.name}
-  
+    
+  - dimension: implementation_manager
+    sql: CONCAT(${implementation_manager.first_name}, ' ', ${implementation_manager.last_name})
+
   - measure: count
     type: count
     drill_fields: [id, practice_name, physician_name, user_type, physician_specialty]

@@ -38,11 +38,11 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
-  - join: implmanager
+  - join: implementation_manager
     from: auth_user
     type: left_outer
     relationship: many_to_one
-    sql_on: ${entities_practice.current_impl_manager_id} = ${implmanager.id}
+    sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
 
 - view: signed_visits
   derived_table:
@@ -76,10 +76,6 @@
   - dimension: practice_name 
     sql: ${entities_practice.practice_name}
 
-  - dimension: implementation_manager
-    type: string                 
-    sql: CONCAT(${implmanager.first_name}, ' ', ${implmanager.last_name})
-    
   - dimension_group: recordDate
     type: time
     timeframes: [date, month]
@@ -135,6 +131,12 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
+  - join: implementation_manager
+    from: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
+    fields: [first_name, last_name]
     
 - view: appointments
   derived_table:
@@ -195,8 +197,7 @@
     
   - dimension: physician_specialty
     sql: ${shareable_medicalspecialty.name}
-  
-    
+ 
   - measure: count
     type: count
     drill_fields: [appointment_time, timecredentialed, practice_name, physician_name, user_type, physician_specialty]
@@ -236,11 +237,12 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
-  - join: auth_user2
+  - join: implementation_manager
     from: auth_user
     type: left_outer
     relationship: many_to_one
-    sql_on: ${entities_practice.current_impl_manager_id} = ${auth_user2.id}
+    sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
+    fields: [first_name, last_name]
   
 - explore: entities_userprofile
   joins:
@@ -273,12 +275,15 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
-  - join: implmanager
+  - join: implementation_manager
     from: auth_user
     type: left_outer
     relationship: many_to_one
-    sql_on: ${entities_practice.current_impl_manager_id} = ${implmanager.id}
+    sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
+    fields: [first_name, last_name]
 
+  fields: 
+    
     
 - explore: filemgr_incomingfilegroup
   joins:
