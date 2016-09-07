@@ -3,7 +3,12 @@
   fields:
 
   - dimension: id
+    hidden: true
     primary_key: true
+    type: number
+    sql: ${TABLE}.id
+    
+  - dimension: url_id
     type: number
     sql: ${TABLE}.id
 # 
@@ -72,6 +77,7 @@
     sql: ${entities_practice.app_type}
     
   - dimension: is_office_staff 
+    hidden: true
     type: yesno
     sql: ${practicians_officestaff.id} IS NOT NULL
 
@@ -113,7 +119,7 @@
   - dimension: implementation_manager
     sql: CONCAT(${implementation_manager.first_name}, ' ', ${implementation_manager.last_name})
 
-  - measure: count
+  - measure: user_count
     type: count
     drill_fields: [id, practice_name, physician_name, user_type, physician_specialty, implementation_manager]
 
