@@ -47,7 +47,7 @@
     timeframes: [time, date, week, month]
     sql: ${TABLE}.time_credentialed
 
-  - dimension_group: time_email_verified
+  - dimension_group: timeemailverified
     hidden: true
     type: time
     timeframes: [time, date, week, month]
@@ -94,7 +94,7 @@
 
   - dimension: user_type
     sql: 
-      CASE WHEN ${TABLE}.is_elation_staff = 0 AND ${TABLE}.timecredentialed IS NOT NULL AND AND ${TABLE}.time_email_verified IS NOT NULL ${entities_practice.app_type} = 'emr' AND ${entities_practice.emr_type} = 'practicing' 
+      CASE WHEN ${TABLE}.is_elation_staff = 0 AND ${TABLE}.timecredentialed IS NOT NULL AND AND ${TABLE}.timeemailverified IS NOT NULL ${entities_practice.app_type} = 'emr' AND ${entities_practice.emr_type} = 'practicing' 
             AND ${auth_user.is_staff} = 0 AND ${auth_user.is_active} = 1 AND ${practicians_practicetophysician.account_type} = 'regular' THEN 'paid provider'
            WHEN ${practicians_officestaff.id} IS NOT NULL AND ${TABLE}.is_elation_staff = 0 AND ${entities_practice.app_type} = 'emr' AND ${entities_practice.emr_type} = 'practicing' THEN 'staff'
            WHEN ${entities_practice.app_type} = 'access' OR ${entities_practice.emr_type} = 'passport' THEN 'provider passport'
