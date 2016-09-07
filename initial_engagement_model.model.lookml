@@ -65,9 +65,9 @@
     type: number                 
     sql: ${TABLE}.user_id
     
-  - dimension: implementation_manager
+  - dimension: implementationmanager
     type: string                 
-    sql: ${}.first_name 
+    sql: CONCAT(${implmanager.first_name}, ' ', ${implmanager.last_name})
     
   - dimension_group: recordDate
     type: time
@@ -76,7 +76,7 @@
   
   - measure: count
     type: count
-    drill_fields: [userid]
+    drill_fields: [userid, implementation_manager]
     
 - explore: appointments
   joins: 
