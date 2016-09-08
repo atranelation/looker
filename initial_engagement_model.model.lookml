@@ -352,7 +352,7 @@
     type: count
     drill_fields: [id]
     
-  - explore:
+  - explore: prescriptions
   
   - view: prescriptions
     derived_table:
