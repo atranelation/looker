@@ -76,17 +76,17 @@
   - dimension: practice_name 
     sql: ${entities_practice.practice_name}
 
-  - dimension_group: recordDate
+  - dimension_group: signed_on
     type: time
-    timeframes: [date, month]
+    timeframes: [time, date, month]
     sql: ${TABLE}.recordDate
     
-  - dimension_group: document_date
+  - dimension_group: created_on
     type: time
-    timeframes: [date, month]
+    timeframes: [time, date, month]
     sql: ${TABLE}.document_date
   
-  - dimension_group: timecredentialed
+  - dimension_group: credentialed_on
     type: time
     timeframes: [time, date, week, month]
     sql: ${entities_userprofile.timecredentialed_date}
@@ -173,9 +173,9 @@
     timeframes: [date, month, year]
     sql: ${TABLE}.recordDate
     
-  - dimension_group: appointment_time
+  - dimension_group: appointment_on
     type: time
-    timeframes: [date, month, year]
+    timeframes: [time, date, month, year]
     sql: ${TABLE}.appt_time
 
   - dimension: duration
@@ -331,17 +331,17 @@
     
   - dimension_group: report_date
     type: time
-    timeframes: [date, month, year]
+    timeframes: [time, date, month, year]
     sql: ${TABLE}.report_date
     
   - dimension_group: create_date
     type: time
-    timeframes: [date, month, year]
+    timeframes: [time, date, month, year]
     sql: ${TABLE}.create_date
 
   - dimension_group: sign_date
     type: time
-    timeframes: [date, month, year]
+    timeframes: [time, date, month, year]
     sql: ${TABLE}.sign_date
 
   - dimension: contains_lab_values
@@ -352,7 +352,62 @@
     type: count
     drill_fields: [id]
     
+  - explore:
+  
+  - view: prescriptions
+    derived_table:
+      sql: 
+        SELECT mm.doc_id, al1.recordDate AS create_date, al2.recordDate AS sign_date, mm.origin, med.isControlled AS `controlled_substance`, mmof.type = 'surescripts' AS `is_erx`, mmof.state IN ('failure', 'error') AS `erx_failed`
+          FROM meds_medorder mm 
+            JOIN patients_document pd ON pd.id = mm.doc_id 
+            JOIN auditlogging_actionlog al1 on al1.id = pd.createLog_id 
+            JOIN auditlogging_actionlog al2 on al2.id= pd.signLog_id 
+            JOIN shareable_medication med on med.id = mm.medication_id
+            LEFT JOIN meds_medorderfulfillment mmof ON mm.fulfillment_id = mmof.id
+          WHERE pd.deleteLog_id IS NULL
+    sql_trigger_value: SELECT CURDATE()
+    indexes: [create_date, sign_date]
     
+  fields:
+  - dimension: user_id
+    type: number
+    sql: ${TABLE}.user_id
+    
+  - dimension_group: create_date
+    type: time
+    timeframes: [time, date, month, year]
+    sql: ${TABLE}.create_date
+
+  - dimension_group: sign_date
+    type: time
+    timeframes: [time, date, month, year]
+    sql: ${TABLE}.sign_date
+
+  - dimension: origin
+    sql: 
+      CASE WHEN ${TABLE}.origin = 1 THEN 'rx'
+           WHEN ${TABLE}.origin = 2 THEN 'doc_med'
+           WHEN ${TABLE}.origin = 3 THEN 'ss'
+        ELSE NULL
+      END
+    
+  - dimension: is_controlled_substance
+    type: yesno
+    sql: ${TABLE}.controlled_substance
+
+  - dimension: is_erx
+    type: yesno
+    sql: ${TABLE}.is_erx
+    
+  - dimension: erx_failed
+    type: yesno
+    sql: ${TABLE}.erx_failed
+    
+  - measure: prescription_count
+    type: count
+    drill_fields: [user_id, is_erx, origin, is_controlled_substance]
+      
+
 
 # - explore: access_accessaccountpreferences
 
