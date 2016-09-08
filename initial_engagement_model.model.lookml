@@ -352,19 +352,19 @@
     type: count
     drill_fields: [id]
     
-  - explore: prescriptions
+- explore: prescriptions
   
-  - view: prescriptions
-    derived_table:
-      sql: 
-        SELECT mm.doc_id, al1.recordDate AS create_date, al2.recordDate AS sign_date, mm.origin, med.isControlled AS `controlled_substance`, mmof.type = 'surescripts' AS `is_erx`, mmof.state IN ('failure', 'error') AS `erx_failed`
-          FROM meds_medorder mm 
-            JOIN patients_document pd ON pd.id = mm.doc_id 
-            JOIN auditlogging_actionlog al1 on al1.id = pd.createLog_id 
-            JOIN auditlogging_actionlog al2 on al2.id= pd.signLog_id 
-            JOIN shareable_medication med on med.id = mm.medication_id
-            LEFT JOIN meds_medorderfulfillment mmof ON mm.fulfillment_id = mmof.id
-          WHERE pd.deleteLog_id IS NULL
+- view: prescriptions
+  derived_table:
+    sql: 
+      SELECT mm.doc_id, al1.recordDate AS create_date, al2.recordDate AS sign_date, mm.origin, med.isControlled AS `controlled_substance`, mmof.type = 'surescripts' AS `is_erx`, mmof.state IN ('failure', 'error') AS `erx_failed`
+        FROM meds_medorder mm 
+          JOIN patients_document pd ON pd.id = mm.doc_id 
+          JOIN auditlogging_actionlog al1 on al1.id = pd.createLog_id 
+          JOIN auditlogging_actionlog al2 on al2.id= pd.signLog_id 
+          JOIN shareable_medication med on med.id = mm.medication_id
+          LEFT JOIN meds_medorderfulfillment mmof ON mm.fulfillment_id = mmof.id
+        WHERE pd.deleteLog_id IS NULL
     sql_trigger_value: SELECT CURDATE()
     indexes: [create_date, sign_date]
     
