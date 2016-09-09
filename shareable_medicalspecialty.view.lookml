@@ -24,7 +24,6 @@
     sql: ${TABLE}.createLog_id
 
   - dimension: name
-    hidden: true
     type: string
     sql: ${TABLE}.name
 
