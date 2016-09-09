@@ -95,7 +95,7 @@
     type: count
     drill_fields: [user_id, physician_name, timecredentialed, practice_id, practice_name, implementation_manager]
   
-  - measure: unique_users
+  - measure: unique_user_count
     type: count_distinct
     sql: ${TABLE}.user_id
     drill_fields: [user_id, physician_name, timecredentialed, practice_id, practice_name, implementation_manager]
@@ -385,9 +385,9 @@
 
   - dimension: origin
     sql: 
-      CASE WHEN ${TABLE}.origin = 1 THEN 'rx'
-           WHEN ${TABLE}.origin = 2 THEN 'doc_med'
-           WHEN ${TABLE}.origin = 3 THEN 'ss'
+      CASE WHEN ${TABLE}.origin = 1 THEN 'written by Elation provider'
+           WHEN ${TABLE}.origin = 2 THEN 'medication documented in Elation, prescribed elsewhere'
+           WHEN ${TABLE}.origin = 3 THEN 'imported from Surescripts pharmacy fill data'
         ELSE NULL
       END
     
@@ -407,7 +407,20 @@
     type: count
     drill_fields: [user_id, is_erx, origin, is_controlled_substance]
       
-
+- explore: letters
+  
+- view: letters
+  derived_table:
+    sql: 
+      SELECT pd.id AS `letter_id`, pd.authoring_practice_id, alal.recordDate AS `sign_date`, ll.send_to_patient AS `to_patient`, ll.delivery_method, ll.fax_attachments, 
+          ll.referral_order_id IS NOT NULL AS `is_referral`, ep.emr_type = 'passport' AS `is_from_patient`
+        FROM letters_letter ll 
+          JOIN patients_document pd ON pd.id = ll.doc_id 
+          JOIN auditlogging_actionlog alal ON alal.id = pd.signLog_id 
+          JOIN entities_practice ep on ep.id = pd.authoring_practice_id 
+        WHERE pd.deleteLog_id IS NULL
+    sql_trigger_value: SELECT CURDATE()
+    indexes: [create_date, sign_date]
 
 # - explore: access_accessaccountpreferences
 
