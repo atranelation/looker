@@ -1,4 +1,5 @@
 - view: auth_user
+  label: Elation_user_login_information
   sql_table_name: el8_app_1.auth_user
   fields:
 

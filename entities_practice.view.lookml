@@ -1,4 +1,5 @@
 - view: entities_practice
+  label: practices
   sql_table_name: el8_app_1.entities_practice
   fields:
 

@@ -1,4 +1,5 @@
 - view: entities_userprofile
+  label: Elation_user_information
   sql_table_name: el8_app_1.entities_userprofile
   fields:
 
