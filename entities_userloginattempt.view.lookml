@@ -4,22 +4,27 @@
 
   - dimension: id
     primary_key: true
+    hidden: true
     type: number
     sql: ${TABLE}.id
 
   - dimension: email_attempted
+    hidden: true
     type: string
     sql: ${TABLE}.email_attempted
 
   - dimension: ip_address
+    hidden: true
     type: string
     sql: ${TABLE}.ip_address
 
   - dimension: login_type
+    hidden: true
     type: string
     sql: ${TABLE}.login_type
 
   - dimension: success
+    hidden: true
     type: yesno
     sql: ${TABLE}.success
 

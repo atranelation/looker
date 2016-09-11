@@ -15,11 +15,11 @@
     type: yesno
     sql: ${TABLE}.accepting_new_patients
 
-  - dimension: access_practice_id
+  - dimension: practice_id
     type: number
     sql: ${TABLE}.access_practice_id
 
-  - dimension: access_user_id
+  - dimension: user_id
     type: number
     sql: ${TABLE}.access_user_id
 
@@ -28,6 +28,7 @@
     sql: ${TABLE}.address
 
   - dimension: alternate_id
+    hidden: true
     type: number
     sql: ${TABLE}.alternate_id
 
@@ -44,6 +45,7 @@
     sql: ${TABLE}.canonical_non_mapping_state
 
   - dimension: cell_phone
+    hidden: true
     type: string
     sql: ${TABLE}.cell_phone
 
@@ -60,6 +62,7 @@
     sql: ${TABLE}.contact_type
 
   - dimension: create_log_id
+    hidden: true
     type: number
     sql: ${TABLE}.createLog_id
 
@@ -68,6 +71,7 @@
     sql: ${TABLE}.credentials
 
   - dimension: delete_log_id
+    hidden: true
     type: number
     sql: ${TABLE}.deleteLog_id
 
@@ -76,6 +80,7 @@
     sql: ${TABLE}.direct_address
 
   - dimension_group: dob
+    hidden: true
     type: time
     timeframes: [date, week, month]
     convert_tz: false
@@ -122,14 +127,17 @@
     sql: ${TABLE}.phone
 
   - dimension: practice_created_id
+    hidden: true
     type: number
     sql: ${TABLE}.practice_created_id
 
   - dimension: prefix
+    hidden: true
     type: string
     sql: ${TABLE}.prefix
 
   - dimension: sex
+    hidden: true
     type: string
     sql: ${TABLE}.sex
 
@@ -142,10 +150,12 @@
     sql: ${TABLE}.state
 
   - dimension: suffix
+    hidden: true
     type: string
     sql: ${TABLE}.suffix
 
   - dimension: suite
+    hidden: true
     type: string
     sql: ${TABLE}.suite
 
@@ -159,5 +169,5 @@
 
   - measure: count
     type: count
-    drill_fields: [id, org_name, middle_name, last_name, first_name]
+    drill_fields: [id, org_name, middle_name, last_name, first_name, practice_id]
 

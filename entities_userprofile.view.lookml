@@ -52,7 +52,7 @@
     timeframes: [time, date, week, month]
     sql: ${TABLE}.time_credentialed
 
-  - dimension_group: timeemailverified
+  - dimension_group: email_verified
     hidden: true
     type: time
     timeframes: [time, date, week, month]

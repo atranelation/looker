@@ -1,4 +1,5 @@
 - view: shareable_medication
+  hidden: true
   sql_table_name: el8_app_1.shareable_medication
   fields:
 

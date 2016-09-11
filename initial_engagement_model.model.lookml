@@ -173,7 +173,7 @@
     timeframes: [date, month, year]
     sql: ${TABLE}.recordDate
     
-  - dimension_group: appointment_on
+  - dimension_group: appointment
     type: time
     timeframes: [time, date, month, year]
     sql: ${TABLE}.appt_time

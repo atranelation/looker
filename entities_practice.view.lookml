@@ -16,6 +16,7 @@
     sql: ${TABLE}.app_type
 
   - dimension: campaign
+    hidden: true
     type: string
     sql: ${TABLE}.campaign
 
@@ -28,10 +29,12 @@
     sql: ${TABLE}.city
 
   - dimension: create_log_id
+    hidden: true
     type: number
     sql: ${TABLE}.createLog_id
 
   - dimension: current_impl_manager_id
+    hidden: true
     type: number
     sql: ${TABLE}.current_impl_manager_id
 
@@ -52,10 +55,12 @@
     sql: ${TABLE}.fax
 
   - dimension: feedback_email
+    hidden: true
     type: string
     sql: ${TABLE}.feedback_email
 
   - dimension: impl_doc_url
+    hidden: true
     type: string
     sql: ${TABLE}.impl_doc_url
 
@@ -76,6 +81,7 @@
     sql: ${TABLE}.state
 
   - dimension: suite
+    hidden: true
     type: string
     sql: ${TABLE}.suite
 
@@ -85,5 +91,5 @@
 
   - measure: count
     type: count
-    drill_fields: [id, name]
+    drill_fields: [id, name, specialty]
 

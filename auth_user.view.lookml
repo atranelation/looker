@@ -25,10 +25,11 @@
     sql: ${TABLE}.is_active
 
   - dimension: is_staff
+    hidden: true
     type: yesno
     sql: ${TABLE}.is_staff
 
-  - dimension: is_superuser
+  - dimension: is_account_admin
     type: yesno
     sql: ${TABLE}.is_superuser
 
@@ -42,6 +43,7 @@
     sql: ${TABLE}.last_name
 
   - dimension: password
+    hidden: true
     type: string
     sql: ${TABLE}.password
 
@@ -51,5 +53,5 @@
 
   - measure: count
     type: count
-    drill_fields: [id, last_name, first_name, username]
+    drill_fields: [id, last_name, first_name, username, last_login]
 
