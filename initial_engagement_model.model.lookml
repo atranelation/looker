@@ -115,7 +115,7 @@
     type: left_outer
     relationship: many_to_one 
     sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
-    fields: [app_type, emr_type, city, state, zip, specialty, enterprise, practice_name]
+    fields: [app_type, emr_type, city, state, zip, specialty, enterprise, practice_name, id]
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 
@@ -200,9 +200,15 @@
     type: time
     timeframes: [time, date, week, month]
     sql: ${entities_userprofile.timecredentialed_date}
-    
+  
   - dimension: practice_name 
     sql: ${entities_practice.practice_name}
+
+  - dimension: practice_specialty 
+    sql: ${entities_practice.specialty}
+
+  - dimension: enterprise 
+    sql: ${entities_enterprise.name}
 
   - dimension: physician_name
     sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
@@ -215,7 +221,7 @@
  
   - measure: count
     type: count
-    drill_fields: [appointment_time, time_credentialed, practice_name, physician_name, user_type, physician_specialty]
+    drill_fields: [appointment_time, time_credentialed, practice_id, practice_name, practice_specialty, enterprise, physician_name, user_type, physician_specialty]
     
 - explore: entities_userloginattempt
   label: 'Log Ins'
