@@ -43,6 +43,10 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
+  - join: entities_enterprise
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
 
 - view: signed_visits
   derived_table:
@@ -142,6 +146,11 @@
     relationship: many_to_one
     sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
     fields: []
+  - join: entities_enterprise
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+
     
 - view: appointments
   derived_table:
@@ -249,6 +258,11 @@
     relationship: many_to_one
     sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
     fields: [first_name, last_name]
+  - join: entities_enterprise
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+
   
 - explore: entities_userprofile
   label: 'Users'
@@ -288,6 +302,11 @@
     relationship: many_to_one
     sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
     fields: [first_name, last_name]
+  - join: entities_enterprise
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+
 
 - explore: filemgr_incomingfilegroup
   joins:
@@ -750,7 +769,7 @@
 
 # - explore: djcelery_workerstate
 
-# - explore: entities_enterprise
+- explore: entities_enterprise
 
 # - explore: entities_entity
 

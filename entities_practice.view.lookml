@@ -90,6 +90,10 @@
     type: string
     sql: ${TABLE}.zip
 
+  - dimension: enterprise
+    type: string
+    sql: ${entities_enterprise.name}
+    
   - measure: count
     type: count
     drill_fields: [id, name, specialty]
