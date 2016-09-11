@@ -143,6 +143,7 @@
     sql: ${TABLE}.sex
 
   - dimension: specialty_id
+    hidden: true
     type: number
     sql: ${TABLE}.specialty_id
 
@@ -167,8 +168,16 @@
   - dimension: zip
     type: string
     sql: ${TABLE}.zip
+  
+  - dimension: physician_full_name
+    type: string
+    sql: CONCAT(${TABLE}.firstName, ' ', ${TABLE}.lastName)
+    
+  - dimension: specialty
+    type: string
+    sql: ${shareable_medicalspecialty.name}
 
   - measure: count
     type: count
-    drill_fields: [id, org_name, middle_name, last_name, first_name, practice_id]
+    drill_fields: [physician_full_name, practice_id, specialty, city, state]
 
