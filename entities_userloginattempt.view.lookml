@@ -1,5 +1,5 @@
 - view: entities_userloginattempt
-  label: user_logins
+  label: User Logins
   sql_table_name: el8_app_1.entities_userloginattempt
   fields:
 

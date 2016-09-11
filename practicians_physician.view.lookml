@@ -1,5 +1,5 @@
 - view: practicians_physician
-  label: EPN_physicians
+  label: EPN Physicians
   sql_table_name: el8_app_1.practicians_physician
   fields:
 

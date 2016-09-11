@@ -1,4 +1,5 @@
 - view: patients_document
+  label: Patient Documents
   sql_table_name: el8_app_1.patients_document
   fields:
 
