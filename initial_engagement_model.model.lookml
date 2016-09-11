@@ -115,27 +115,27 @@
     type: left_outer
     relationship: many_to_one 
     sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
-    fields: [app_type, emr_type, practice_name]
+    fields: [app_type, emr_type, city, state, zip, specialty, enterprise, practice_name]
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 
     sql_on: ${practicians_officestaff.id} = ${entities_userprofile.id}
-    fields: [id]
+    fields: []
   - join: auth_user
     type: left_outer
     relationship: many_to_one
     sql_on: ${auth_user.id} = ${entities_userprofile.user_id}
-    fields: [is_staff]  
+    fields: []  
   - join: practicians_physician
     type: left_outer
     relationship: many_to_one
     sql_on: ${practicians_physician.id} = ${entities_userprofile.id}
-    fields: [id]  
+    fields: [physician_full_name, practice_id, specialty, city, state]  
   - join: practicians_practicetophysician
     type: left_outer
     relationship: many_to_one
     sql_on: ${practicians_practicetophysician.physician_id} = ${entities_userprofile.id} AND ${practicians_practicetophysician.practice_id} = ${entities_userprofile.practice_id} 
-    fields: [account_type]
+    fields: []
   - join: shareable_medicalspecialty
     type: left_outer
     relationship: many_to_one
@@ -150,6 +150,7 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+    fields: []
 
     
 - view: appointments
