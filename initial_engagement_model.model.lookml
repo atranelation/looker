@@ -141,7 +141,7 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
-    fields: [first_name, last_name]
+    fields: []
     
 - view: appointments
   derived_table:
