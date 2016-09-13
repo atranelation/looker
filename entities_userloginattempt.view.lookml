@@ -45,7 +45,7 @@
     
   - dimension: physician_name
     hidden: true
-    sql: CONCAT(${practicians_physician.first_name}, ${practicians_physician.last_name})  
+    sql: CONCAT(${practicians_physician.first_name},' ', ${practicians_physician.last_name})  
     
   - dimension: user_type
     hidden: true
