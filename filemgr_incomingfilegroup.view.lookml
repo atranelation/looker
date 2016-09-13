@@ -5,6 +5,7 @@
 
   - dimension: id
     primary_key: true
+    hidden: true
     type: number
     sql: ${TABLE}.id
 
@@ -33,6 +34,7 @@
     sql: ${TABLE}.file_size
 
   - dimension: from_npi
+    hidden: true
     type: string
     sql: ${TABLE}.from_npi
 
@@ -114,8 +116,38 @@
     type: time
     timeframes: [time, date, week, month]
     sql: ${TABLE}.transmit_time
+  
+  - dimension: practice_name 
+    sql: ${entities_practice.practice_name}
+    
+  - dimension: practice_specialty
+    sql: ${entities_practice.specialty}
+    
+  - dimension: enterprise
+    type: string
+    sql: ${entities_enterprise.name}
 
+  - dimension: practice_state
+    type: string
+    sql: ${entities_practice.state}
+    
+  - dimension: practice_city
+    type: string
+    sql: ${entities_practice.city}
+    
+  - dimension: practice_ZIP
+    type: string
+    sql: ${entities_practice.zip}    
+    
+  - dimension: emr_type
+    type: string
+    sql: ${entities_practice.emr_type}    
+    
+  - dimension: app_type
+    type: string
+    sql: ${entities_practice.app_type}    
+    
   - measure: count
     type: count
-    drill_fields: [id, practice_id]
+    drill_fields: [id, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type ]
 
