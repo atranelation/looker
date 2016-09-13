@@ -25,7 +25,6 @@
     sql: ${TABLE}.login_type
 
   - dimension: success
-    hidden: true
     type: yesno
     sql: ${TABLE}.success
 
