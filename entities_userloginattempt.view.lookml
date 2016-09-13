@@ -64,32 +64,46 @@
     sql: ${entities_practice.specialty}
     
   - dimension_group: provider_credentialed
+    hidden: true
     type: time
     timeframes: [time, date, week, month]
     sql: ${entities_userprofile.timecredentialed_date}
   
-  - dimension: practice_enterprise
+  - dimension: enterprise
+    hidden: true
     type: string
     sql: ${entities_enterprise.name}
 
   - dimension: practice_state
+    hidden: true
     type: string
     sql: ${entities_practice.state}
     
   - dimension: practice_city
+    hidden: true
     type: string
     sql: ${entities_practice.city}
     
-
   - dimension: practice_ZIP
+    hidden: true
     type: string
     sql: ${entities_practice.zip}    
     
+  - dimension: emr_type
+    hidden: true
+    type: string
+    sql: ${entities_practice.emr_type}    
+    
+  - dimension: app_type
+    hidden: true
+    type: string
+    sql: ${entities_practice.app_type}    
+    
   - measure: count
     type: count
-    drill_fields: [user_type, user_id, provider_name, provider_specialty, practice_name]
+    drill_fields: [user_type, user_id, provider_name, provider_specialty, provider_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type ]
 
   - measure: unique_user_count
     type: count_distinct
     sql: ${TABLE}.user_id
-    drill_fields: [user_type, physician_name, physician_specialty, practice_name]
+    drill_fields: [user_type, user_id, provider_name, provider_specialty, provider_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type ]
