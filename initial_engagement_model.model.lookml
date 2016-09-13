@@ -778,7 +778,7 @@
 
 # - explore: djcelery_workerstate
 
-- explore: entities_enterprise
+# - explore: entities_enterprise
 
 # - explore: entities_entity
 
