@@ -249,7 +249,6 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${practicians_physician.id} = ${entities_userprofile.id}
-    fields: [id]  
   - join: practicians_practicetophysician
     type: left_outer
     relationship: many_to_one
