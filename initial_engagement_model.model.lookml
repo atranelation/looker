@@ -316,6 +316,7 @@
 
 
 - explore: filemgr_incomingfilegroup
+  label: Images Received 
   joins:
   - join: entities_practice
     type: inner
@@ -324,6 +325,7 @@
     fields: [practice_name, specialty, city, state, zip, enterprise_id]
   
 - explore: messaging_threadmessage
+  label: Messages Sent
   joins:
   - join: patients_document
     type: inner
