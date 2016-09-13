@@ -4,6 +4,7 @@
   fields:
 
   - dimension: id
+    label: url_id
     primary_key: true
     type: number
     sql: ${TABLE}.id
