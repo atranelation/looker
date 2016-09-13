@@ -458,7 +458,55 @@
     drill_fields: [id]
     
 - explore: prescriptions
-  
+  joins:
+  - join: entities_userprofile
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${prescriptions.user_id} = ${entities_userprofile.user_id}
+    fields: []
+  - join: entities_practice
+    type: left_outer
+    relationship: many_to_one 
+    fields: []
+    sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
+  - join: practicians_officestaff
+    type: left_outer
+    relationship: many_to_one 
+    fields: []
+    sql_on: ${practicians_officestaff.id} = ${entities_userprofile.id}
+    fields: [id]
+  - join: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${auth_user.id} = ${entities_userprofile.user_id}
+    fields: []
+  - join: practicians_physician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${practicians_physician.id} = ${entities_userprofile.id}
+    fields: []
+  - join: practicians_practicetophysician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${practicians_practicetophysician.physician_id} = ${entities_userprofile.id} AND ${practicians_practicetophysician.practice_id} = ${entities_userprofile.practice_id} 
+    fields: []
+  - join: shareable_medicalspecialty
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.specialty_id}
+    fields: []
+  - join: implementation_manager
+    from: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
+    fields: []
+  - join: entities_enterprise
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+    fields: []
+
 - view: prescriptions
   derived_table:
     sql: 
@@ -476,9 +524,9 @@
   fields:
   - dimension: user_id
     type: number
-    sql: ${TABLE}.doc_id
+    sql: ${entities_userprofile.user_id}
     
-  - dimension_group: create_date
+  - dimension_group: prescription_create
     type: time
     timeframes: [time, date, month, year]
     sql: ${TABLE}.create_date
@@ -507,6 +555,50 @@
   - dimension: erx_failed
     type: yesno
     sql: ${TABLE}.erx_failed
+    
+  - dimension: practice_specialty 
+    sql: ${entities_practice.specialty}
+
+  - dimension: provider_name
+    sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
+  
+  - dimension: provider_specialty
+    sql: ${shareable_medicalspecialty.name}
+    
+  - dimension_group: provider_credentialed
+    type: time
+    timeframes: [time, date, week, month]
+    sql: ${entities_userprofile.timecredentialed_date}
+
+  - dimension: practice_id 
+    sql: ${entities_practice.id}
+    
+  - dimension: practice_name 
+    sql: ${entities_practice.practice_name}
+    
+  - dimension: enterprise
+    type: string
+    sql: ${entities_enterprise.name}
+
+  - dimension: practice_state
+    type: string
+    sql: ${entities_practice.state}
+    
+  - dimension: practice_city
+    type: string
+    sql: ${entities_practice.city}
+    
+  - dimension: practice_ZIP
+    type: string
+    sql: ${entities_practice.zip}    
+    
+  - dimension: emr_type
+    type: string
+    sql: ${entities_practice.emr_type}    
+    
+  - dimension: app_type
+    type: string
+    sql: ${entities_practice.app_type}        
     
   - measure: prescription_count
     type: count
