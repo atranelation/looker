@@ -39,6 +39,7 @@
     sql: ${TABLE}.from_npi
 
   - dimension: from_number
+    hidden: true
     type: string
     sql: ${TABLE}.from_number
 
@@ -148,7 +149,7 @@
     sql: ${entities_practice.app_type}    
     
   - dimension: is_fax
-    type: yesno
+    type: string
     sql: CASE WHEN ${TABLE}.source = 'user' THEN 'User Upload' ELSE 'Fax' END
   
   - measure: count
