@@ -111,6 +111,7 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${appointments.user_id} = ${entities_userprofile.user_id}
+    fields: []
   - join: entities_practice
     type: left_outer
     relationship: many_to_one 
@@ -130,7 +131,7 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${practicians_physician.id} = ${entities_userprofile.id}
-    fields: [physician_full_name, practice_id, specialty, city, state]  
+    fields: []
   - join: practicians_practicetophysician
     type: left_outer
     relationship: many_to_one
@@ -140,6 +141,7 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.specialty_id}
+    fields: []
   - join: implementation_manager
     from: auth_user
     type: left_outer
