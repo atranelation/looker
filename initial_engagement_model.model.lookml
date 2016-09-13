@@ -200,9 +200,6 @@
   - dimension: practice_specialty 
     sql: ${entities_practice.specialty}
 
-  - dimension: user_type    
-    sql: ${entities_userprofile.user_type}
-
   - dimension: provider_name
     sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
   
@@ -243,7 +240,7 @@
     
   - measure: count
     type: count
-    drill_fields: [appointment_time, user_type, user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
+    drill_fields: [appointment_time, user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
     
 - explore: entities_userloginattempt
   label: 'Log Ins'
@@ -531,7 +528,7 @@
     timeframes: [time, date, month, year]
     sql: ${TABLE}.create_date
 
-  - dimension_group: sign_date
+  - dimension_group: prescription_sign
     type: time
     timeframes: [time, date, month, year]
     sql: ${TABLE}.sign_date
@@ -602,7 +599,8 @@
     
   - measure: prescription_count
     type: count
-    drill_fields: [user_id, is_erx, origin, is_controlled_substance]
+    drill_fields: [physician_user_id, is_erx, origin, is_controlled_substance, provider_name, provider_specialty, time_credentialed, 
+          practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
       
 - explore: letters
   
