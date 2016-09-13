@@ -45,6 +45,7 @@
 #     sql: ${TABLE}.optEmailWeekly
 
   - dimension: practice_id
+    hidden: true
     type: number
     sql: ${TABLE}.practice_id
 
@@ -72,9 +73,11 @@
     sql: ${entities_practice.practice_name}
   
   - dimension: emr_type 
+    hidden: true
     sql: ${entities_practice.emr_type}
 
   - dimension: app_type 
+    hidden: true
     sql: ${entities_practice.app_type}
     
   - dimension: is_office_staff 
@@ -111,10 +114,11 @@
         ELSE NULL
       END
 
-  - dimension: physician_name
+  - dimension: provider_name
+    hidden: true
     sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
     
-  - dimension: physician_specialty
+  - dimension: provider_specialty
     sql: ${shareable_medicalspecialty.name}
     
   - dimension: implementation_manager
@@ -136,5 +140,5 @@
 
   - measure: user_count
     type: count
-    drill_fields: [id, practice_name, physician_name, user_type, physician_specialty, implementation_manager]
+    drill_fields: [id, practice_name, provider_name, user_type, provider_specialty, implementation_manager]
 
