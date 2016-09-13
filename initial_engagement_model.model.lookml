@@ -359,7 +359,55 @@
   - join: patients_document
     type: inner
     relationship: many_to_one 
-    sql_on: ${patients_document.id} = ${messaging_threadmessage.thread_id} AND ${patients_document.delete_log_id} IS NULL 
+    sql_on: ${patients_document.id} = ${messaging_threadmessage.thread_id} AND ${patients_document.delete_log_id} IS NULL
+    fields: []
+  - join: entities_userprofile
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${messaging_threadmessage.sender_user_id} = ${entities_userprofile.user_id}
+    fields: []
+  - join: entities_practice
+    type: left_outer
+    relationship: many_to_one 
+    fields: []
+    sql_on: ${entities_practice.id} = ${patients_document.authoring_practice_id}
+  - join: practicians_officestaff
+    type: left_outer
+    relationship: many_to_one 
+    fields: []
+    sql_on: ${practicians_officestaff.id} = ${entities_userprofile.id}
+    fields: [id]
+  - join: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${auth_user.id} = ${entities_userprofile.user_id}
+    fields: []
+  - join: practicians_physician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${practicians_physician.id} = ${entities_userprofile.id}
+    fields: []
+  - join: practicians_practicetophysician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${practicians_practicetophysician.physician_id} = ${entities_userprofile.id} AND ${practicians_practicetophysician.practice_id} = ${entities_userprofile.practice_id} 
+    fields: []
+  - join: shareable_medicalspecialty
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.specialty_id}
+    fields: []
+  - join: implementation_manager
+    from: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
+    fields: []
+  - join: entities_enterprise
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+    fields: []
     
 - explore: reports
 
