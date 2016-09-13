@@ -36,66 +36,52 @@
 
   - dimension: user_id
     type: number
-    hidden: true    
     sql: ${TABLE}.user_id
   
   - dimension: practice_name 
-    hidden: true
     sql: ${entities_userprofile.practice_name}
     
   - dimension: practice_id 
-    hidden: true
     sql: ${entities_practice.id}    
     
   - dimension: provider_name
-    hidden: true
     sql: CONCAT(${practicians_physician.first_name},' ', ${practicians_physician.last_name})  
     
   - dimension: user_type
-    hidden: true
     sql: ${entities_userprofile.user_type}
     
   - dimension: provider_specialty
-    hidden: true
     sql: ${shareable_medicalspecialty.name}
     
   - dimension: practice_specialty
-    hidden: true
     sql: ${entities_practice.specialty}
     
   - dimension_group: provider_credentialed
-    hidden: true
     type: time
     timeframes: [time, date, week, month]
     sql: ${entities_userprofile.timecredentialed_date}
   
   - dimension: enterprise
-    hidden: true
     type: string
     sql: ${entities_enterprise.name}
 
   - dimension: practice_state
-    hidden: true
     type: string
     sql: ${entities_practice.state}
     
   - dimension: practice_city
-    hidden: true
     type: string
     sql: ${entities_practice.city}
     
   - dimension: practice_ZIP
-    hidden: true
     type: string
     sql: ${entities_practice.zip}    
     
   - dimension: emr_type
-    hidden: true
     type: string
     sql: ${entities_practice.emr_type}    
     
   - dimension: app_type
-    hidden: true
     type: string
     sql: ${entities_practice.app_type}    
     
