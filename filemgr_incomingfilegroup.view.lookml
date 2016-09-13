@@ -1,5 +1,5 @@
 - view: filemgr_incomingfilegroup
-  label: images
+  label: Incoming Files
   sql_table_name: el8_app_1.filemgr_incomingfilegroup
   fields:
 
@@ -147,6 +147,10 @@
     type: string
     sql: ${entities_practice.app_type}    
     
+  - dimension: is_fax
+    type: yesno
+    sql: CASE WHEN ${TABLE}.source = 'user' THEN 'User Upload' ELSE 'Fax' END
+  
   - measure: count
     type: count
     drill_fields: [id, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type ]
