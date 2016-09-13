@@ -110,12 +110,12 @@
   - join: entities_userprofile
     type: left_outer
     relationship: many_to_one
-    sql_on: ${appointments.physician_user_id} = ${entities_userprofile.user_id}
+    sql_on: ${appointments.user_id} = ${entities_userprofile.user_id}
   - join: entities_practice
     type: left_outer
     relationship: many_to_one 
-    sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
-    fields: [app_type, emr_type, city, state, zip, specialty, enterprise, practice_name, id]
+    sql_on: ${entities_practice.id} = ${appointments.practice_id}
+    fields: []
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 
@@ -152,7 +152,6 @@
     sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
     fields: []
 
-    
 - view: appointments
   derived_table:
     sql:
@@ -174,7 +173,7 @@
     type: number
     sql: ${TABLE}.practice_id
     
-  - dimension: physician_user_id
+  - dimension: user_id
     type: number
     sql: ${TABLE}.physician_user_id
     
@@ -196,32 +195,53 @@
     type: string
     sql: ${TABLE}.status
     
+  - dimension: practice_specialty 
+    sql: ${entities_practice.specialty}
+
+  - dimension: user_type    
+    sql: ${entities_userprofile.user_type}
+
+  - dimension: provider_name
+    sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
+  
+  - dimension: provider_specialty
+    sql: ${shareable_medicalspecialty.name}
+    
   - dimension_group: time_credentialed
     type: time
     timeframes: [time, date, week, month]
     sql: ${entities_userprofile.timecredentialed_date}
-  
+
   - dimension: practice_name 
     sql: ${entities_practice.practice_name}
-
-  - dimension: practice_specialty 
-    sql: ${entities_practice.specialty}
-
-  - dimension: enterprise 
+    
+  - dimension: enterprise
+    type: string
     sql: ${entities_enterprise.name}
 
-  - dimension: physician_name
-    sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
+  - dimension: practice_state
+    type: string
+    sql: ${entities_practice.state}
     
-  - dimension: user_type    
-    sql: ${entities_userprofile.user_type}
+  - dimension: practice_city
+    type: string
+    sql: ${entities_practice.city}
     
-  - dimension: physician_specialty
-    sql: ${shareable_medicalspecialty.name}
- 
+  - dimension: practice_ZIP
+    type: string
+    sql: ${entities_practice.zip}    
+    
+  - dimension: emr_type
+    type: string
+    sql: ${entities_practice.emr_type}    
+    
+  - dimension: app_type
+    type: string
+    sql: ${entities_practice.app_type}    
+    
   - measure: count
     type: count
-    drill_fields: [appointment_time, time_credentialed, practice_id, practice_name, practice_specialty, enterprise, physician_name, user_type, physician_specialty]
+    drill_fields: [appointment_time, user_type, user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
     
 - explore: entities_userloginattempt
   label: 'Log Ins'
