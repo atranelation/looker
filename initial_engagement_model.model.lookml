@@ -339,15 +339,19 @@
     relationship: many_to_one
     sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
 
-
 - explore: filemgr_incomingfilegroup
   label: Images Received 
   joins:
   - join: entities_practice
-    type: inner
+    type: left_outer
     relationship: many_to_one 
+    fields: []
     sql_on: ${entities_practice.id} = ${filemgr_incomingfilegroup.practice_id}
-    fields: [practice_name, specialty, city, state, zip, enterprise_id]
+  - join: entities_enterprise
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+    fields: []
   
 - explore: messaging_threadmessage
   label: Messages Sent
