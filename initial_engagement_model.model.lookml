@@ -407,6 +407,17 @@
     fields: []
     
 - explore: reports
+  joins:
+  - join: entities_practice
+    type: left_outer
+    relationship: many_to_one 
+    fields: []
+    sql_on: ${entities_practice.id} = ${reports.practice_id}
+  - join: entities_enterprise
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+    fields: []
 
 - view: reports
   derived_table:
@@ -427,21 +438,21 @@
     primary_key: true
     sql: ${TABLE}.id
     
-  - dimension: authoring_practice_id
+  - dimension: practice_id
     type: number
     sql: ${TABLE}.authoring_practice_id
     
-  - dimension_group: report_date
+  - dimension_group: report
     type: time
     timeframes: [time, date, month, year]
     sql: ${TABLE}.report_date
     
-  - dimension_group: create_date
+  - dimension_group: create
     type: time
     timeframes: [time, date, month, year]
     sql: ${TABLE}.create_date
 
-  - dimension_group: sign_date
+  - dimension_group: sign
     type: time
     timeframes: [time, date, month, year]
     sql: ${TABLE}.sign_date
@@ -449,10 +460,40 @@
   - dimension: contains_lab_values
     type: yesno
     sql: ${TABLE}.contains_lab_values
+    
+  - dimension: practice_name 
+    sql: ${entities_practice.practice_name}
+    
+  - dimension: practice_specialty
+    sql: ${entities_practice.specialty}
+    
+  - dimension: enterprise
+    type: string
+    sql: ${entities_enterprise.name}
 
-  - measure: count
+  - dimension: practice_state
+    type: string
+    sql: ${entities_practice.state}
+    
+  - dimension: practice_city
+    type: string
+    sql: ${entities_practice.city}
+    
+  - dimension: practice_ZIP
+    type: string
+    sql: ${entities_practice.zip}    
+    
+  - dimension: emr_type
+    type: string
+    sql: ${entities_practice.emr_type}    
+    
+  - dimension: app_type
+    type: string
+    sql: ${entities_practice.app_type}    
+
+  - measure: report_count
     type: count
-    drill_fields: [id]
+    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type ]
     
 - explore: prescriptions
   joins:
@@ -603,7 +644,7 @@
           practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
       
 - explore: letters
-  
+
 - view: letters
   derived_table:
     sql: 
