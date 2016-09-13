@@ -476,7 +476,7 @@
   fields:
   - dimension: user_id
     type: number
-    sql: ${TABLE}.user_id
+    sql: ${TABLE}.doc_id
     
   - dimension_group: create_date
     type: time
