@@ -179,7 +179,7 @@
     type: number
     sql: ${TABLE}.physician_user_id
     
-  - dimension_group: recordDate
+  - dimension_group: record
     type: time
     timeframes: [date, month, year]
     sql: ${TABLE}.recordDate
@@ -209,7 +209,7 @@
   - dimension: provider_specialty
     sql: ${shareable_medicalspecialty.name}
     
-  - dimension_group: time_credentialed
+  - dimension_group: provider_credentialed
     type: time
     timeframes: [time, date, week, month]
     sql: ${entities_userprofile.timecredentialed_date}
