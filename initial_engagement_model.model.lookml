@@ -37,7 +37,7 @@
   - join: shareable_medicalspecialty
     type: left_outer
     relationship: many_to_one
-    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
+    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.specialty_id}
   - join: implementation_manager
     from: auth_user
     type: left_outer
@@ -139,7 +139,7 @@
   - join: shareable_medicalspecialty
     type: left_outer
     relationship: many_to_one
-    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
+    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.specialty_id}
   - join: implementation_manager
     from: auth_user
     type: left_outer
@@ -258,7 +258,7 @@
   - join: shareable_medicalspecialty
     type: left_outer
     relationship: many_to_one
-    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
+    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.specialty_id}
   - join: implementation_manager
     from: auth_user
     type: left_outer
@@ -302,7 +302,7 @@
   - join: shareable_medicalspecialty
     type: left_outer
     relationship: many_to_one
-    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.id}
+    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.specialty_id}
   - join: implementation_manager
     from: auth_user
     type: left_outer
