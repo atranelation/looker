@@ -340,7 +340,7 @@
     sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
 
 - explore: filemgr_incomingfilegroup
-  label: Images Received 
+  label: Incoming Images
   joins:
   - join: entities_practice
     type: left_outer

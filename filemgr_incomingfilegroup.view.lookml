@@ -1,5 +1,5 @@
 - view: filemgr_incomingfilegroup
-  label: Incoming Files
+  label: Incoming Images
   sql_table_name: el8_app_1.filemgr_incomingfilegroup
   fields:
 
