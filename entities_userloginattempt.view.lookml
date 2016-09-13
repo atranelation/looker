@@ -43,7 +43,11 @@
     hidden: true
     sql: ${entities_userprofile.practice_name}
     
-  - dimension: physician_name
+  - dimension: practice_id 
+    hidden: true
+    sql: ${entities_practice.id}    
+    
+  - dimension: provider_name
     hidden: true
     sql: CONCAT(${practicians_physician.first_name},' ', ${practicians_physician.last_name})  
     
@@ -51,7 +55,7 @@
     hidden: true
     sql: ${entities_userprofile.user_type}
     
-  - dimension: physician_specialty
+  - dimension: provider_specialty
     hidden: true
     sql: ${shareable_medicalspecialty.name}
     
@@ -59,9 +63,31 @@
     hidden: true
     sql: ${entities_practice.specialty}
     
+  - dimension_group: provider_credentialed
+    type: time
+    timeframes: [time, date, week, month]
+    sql: ${entities_userprofile.timecredentialed_date}
+  
+  - dimension: practice_enterprise
+    type: string
+    sql: ${entities_enterprise.name}
+
+  - dimension: practice_state
+    type: string
+    sql: ${entities_practice.state}
+    
+  - dimension: practice_city
+    type: string
+    sql: ${entities_practice.city}
+    
+
+  - dimension: practice_ZIP
+    type: string
+    sql: ${entities_practice.zip}    
+    
   - measure: count
     type: count
-    drill_fields: [user_type, user_id, physician_name, physician_specialty, practice_name]
+    drill_fields: [user_type, user_id, provider_name, provider_specialty, practice_name]
 
   - measure: unique_user_count
     type: count_distinct
