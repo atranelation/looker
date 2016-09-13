@@ -120,6 +120,20 @@
   - dimension: implementation_manager
     sql: CONCAT(${implementation_manager.first_name}, ' ', ${implementation_manager.last_name})
 
+  - dimension_group: last_login
+    type: time
+    timeframes: [time, date, week, month]
+    sql: ${auth_user.last_login_date}
+
+  - dimension_group: date_joined
+    type: time
+    timeframes: [time, date, week, month]
+    sql: ${auth_user.date_joined_date}
+    
+  - dimension: email
+    type: string
+    sql: ${auth_user.email}
+
   - measure: user_count
     type: count
     drill_fields: [id, practice_name, physician_name, user_type, physician_specialty, implementation_manager]
