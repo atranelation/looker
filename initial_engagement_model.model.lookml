@@ -644,11 +644,22 @@
           practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
       
 - explore: letters
+  joins:
+  - join: entities_practice
+    type: left_outer
+    relationship: many_to_one 
+    fields: []
+    sql_on: ${entities_practice.id} = ${letters.practice_id}
+  - join: entities_enterprise
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+    fields: []
 
 - view: letters
   derived_table:
     sql: 
-      SELECT pd.id AS `letter_id`, pd.authoring_practice_id, alal.recordDate AS `sign_date`, ll.send_to_patient AS `to_patient`, ll.delivery_method, ll.fax_attachments, 
+      SELECT pd.id AS letter_id, pd.authoring_practice_id AS practice_id, alal.recordDate AS sign_date, ll.send_to_patient AS `to_patient`, ll.delivery_method AS deliver_method, ll.fax_attachments AS fax_attachments, 
           ll.referral_order_id IS NOT NULL AS `is_referral`, ep.emr_type = 'passport' AS `is_from_patient`
         FROM letters_letter ll 
           JOIN patients_document pd ON pd.id = ll.doc_id 
@@ -657,6 +668,79 @@
         WHERE pd.deleteLog_id IS NULL
     sql_trigger_value: SELECT CURDATE()
     indexes: [create_date, sign_date]
+
+  fields:
+  
+  - dimension: letter_id 
+    type: number
+    primary_key: true
+    sql: ${TABLE}.letter_id
+    
+  - dimension: practice_id 
+    type: number
+    sql: ${TABLE}.practice_id
+    
+  - dimension_group: sign
+    type: time
+    timeframes: [time, date, month, year]
+    sql: ${TABLE}.sign_date
+    
+  - dimension: to_patient
+    type: yesno
+    sql: ${TABLE}.to_patient
+    
+  - dimension: delivery_method
+    type: string
+    sql: ${TABLE}.delivery_method
+    
+  - dimension: fax_attachments
+    type: yesno
+    sql: ${TABLE}.fax_attachments
+    
+  - dimension: is_referral
+    type: yesno
+    sql: ${TABLE}.is_referral  
+  
+  - dimension: is_from_patient
+    type: yesno
+    sql: ${TABLE}.is_from_patient  
+  
+  - dimension: practice_name 
+    type: string
+    sql: ${entities_practice.practice_name}
+    
+  - dimension: practice_specialty
+    type: string
+    sql: ${entities_practice.specialty}
+    
+  - dimension: enterprise
+    type: string
+    sql: ${entities_enterprise.name}
+
+  - dimension: practice_state
+    type: string
+    sql: ${entities_practice.state}
+    
+  - dimension: practice_city
+    type: string
+    sql: ${entities_practice.city}
+    
+  - dimension: practice_ZIP
+    type: string
+    sql: ${entities_practice.zip}    
+    
+  - dimension: emr_type
+    type: string
+    sql: ${entities_practice.emr_type}    
+    
+  - dimension: app_type
+    type: string
+    sql: ${entities_practice.app_type}    
+
+  - measure: report_count
+    type: count
+    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type ]
+    
 
 # - explore: access_accessaccountpreferences
 
