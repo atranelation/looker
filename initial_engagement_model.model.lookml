@@ -139,17 +139,17 @@
     
   - measure: visit_notes_count
     type: count
-    drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type, implementation_manager]
+    drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
   
   - measure: unique_user_count
     type: count_distinct
     sql: ${TABLE}.user_id
-    drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type, implementation_manager]
+    drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
 
   - measure: unique_practice_count
     type: count_distinct
     sql: ${TABLE}.practice_id
-    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type, implementation_manager]
+    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
 
 - explore: appointments
   joins: 
