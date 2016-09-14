@@ -142,3 +142,9 @@
     type: count
     drill_fields: [id, practice_name, provider_name, user_type, provider_specialty, implementation_manager]
 
+  - measure: unique_practice_count
+    type: count_distinct
+    sql: ${TABLE}.practice_id
+    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
+      
+
