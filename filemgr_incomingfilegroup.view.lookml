@@ -152,7 +152,13 @@
     type: string
     sql: CASE WHEN ${TABLE}.source = 'user' THEN 'User Upload' ELSE 'Fax' END
   
-  - measure: count
+  - measure: incoming_images_count
     type: count
-    drill_fields: [id, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type ]
+    drill_fields: [id, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
+    
+  - measure: unique_practice_count
+    type: count_distinct
+    sql: ${TABLE}.practice_id
+    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
+      
 
