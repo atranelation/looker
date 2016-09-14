@@ -776,7 +776,7 @@
 
   - dimension: user_id
     type: number
-    sql: ${TABLE}.user_id WHERE ${entities_userprofile.user_type} = 'paid provider'
+    sql:  WHEN ${entities_userprofile.user_type} = 'paid provider' THEN ${TABLE}.user_id ELSE NULL
 
   - dimension: provider_name
     sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
