@@ -4,6 +4,7 @@
 - include: "*.dashboard.lookml"  # include all the dashboards
 
 - explore: signed_visits
+  label: Visit Notes
   joins: 
   - join: entities_userprofile
     type: left_outer
@@ -84,20 +85,15 @@
   - dimension: practice_name 
     sql: ${entities_practice.practice_name}
 
-  - dimension_group: signed_on
+  - dimension_group: signed
     type: time
     timeframes: [time, date, month]
     sql: ${TABLE}.recordDate
     
-  - dimension_group: visit_on
+  - dimension_group: visit_note
     type: time
     timeframes: [time, date, month]
     sql: ${TABLE}.document_date
-  
-  - dimension_group: credentialed_on
-    type: time
-    timeframes: [time, date, week, month]
-    sql: ${entities_userprofile.timecredentialed_date}
 
   - dimension: source
     type: string
