@@ -148,7 +148,7 @@
 
   - measure: unique_practice_count
     type: count_distinct
-    sql: ${TABLE}.practice_id
+    sql: ${entities_practice.id}
     drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
 
 - explore: appointments
