@@ -645,17 +645,54 @@
       
 - explore: letters
   joins:
+  - join: entities_userprofile
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${letters.user_id} = ${entities_userprofile.user_id}
+    fields: []
   - join: entities_practice
     type: left_outer
     relationship: many_to_one 
     fields: []
     sql_on: ${entities_practice.id} = ${letters.practice_id}
+  - join: practicians_officestaff
+    type: left_outer
+    relationship: many_to_one 
+    fields: []
+    sql_on: ${practicians_officestaff.id} = ${entities_userprofile.id}
+    fields: [id]
+  - join: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${auth_user.id} = ${entities_userprofile.user_id}
+    fields: []
+  - join: practicians_physician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${practicians_physician.id} = ${entities_userprofile.id}
+    fields: []
+  - join: practicians_practicetophysician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${practicians_practicetophysician.physician_id} = ${entities_userprofile.id} AND ${practicians_practicetophysician.practice_id} = ${entities_userprofile.practice_id} 
+    fields: []
+  - join: shareable_medicalspecialty
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.specialty_id}
+    fields: []
+  - join: implementation_manager
+    from: auth_user
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
+    fields: []
   - join: entities_enterprise
     type: left_outer
     relationship: many_to_one
     sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
     fields: []
-
+    
 - view: letters
   derived_table:
     sql: 
@@ -739,7 +776,18 @@
 
   - dimension: user_id
     type: number
-    sql: ${TABLE}.user_id
+    sql: ${TABLE}.user_id WHERE ${entities_userprofile.user_type} = 'paid provider'
+
+  - dimension: provider_name
+    sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
+  
+  - dimension: provider_specialty
+    sql: ${shareable_medicalspecialty.name}
+    
+  - dimension_group: provider_credentialed
+    type: time
+    timeframes: [time, date, week, month]
+    sql: ${entities_userprofile.timecredentialed_date}
 
   - measure: report_count
     type: count
