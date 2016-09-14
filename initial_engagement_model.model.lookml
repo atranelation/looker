@@ -791,7 +791,8 @@
 
   - measure: report_count
     type: count
-    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type ]
+    drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, 
+          practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type, is_from_patient,is_referral ]
     
 
 # - explore: access_accessaccountpreferences
