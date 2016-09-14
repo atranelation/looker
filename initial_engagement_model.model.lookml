@@ -667,7 +667,7 @@
           JOIN entities_practice ep on ep.id = pd.authoring_practice_id 
         WHERE pd.deleteLog_id IS NULL
     sql_trigger_value: SELECT CURDATE()
-    indexes: [create_date, sign_date]
+    indexes: [letter_id, sign_date]
 
   fields:
   
