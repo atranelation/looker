@@ -137,7 +137,7 @@
     type: string
     sql: ${entities_practice.app_type}    
     
-  - measure: visits_count
+  - measure: visit_notes_count
     type: count
     drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type, implementation_manager]
   
@@ -145,6 +145,11 @@
     type: count_distinct
     sql: ${TABLE}.user_id
     drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type, implementation_manager]
+
+  - measure: unique_practice_count
+    type: count_distinct
+    sql: ${TABLE}.practice_id
+    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type, implementation_manager]
 
 - explore: appointments
   joins: 
@@ -279,10 +284,20 @@
     type: string
     sql: ${entities_practice.app_type}    
     
-  - measure: count
+  - measure: appointment_count
     type: count
     drill_fields: [appointment_time, user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
-    
+
+  - measure: unique_user_count
+    type: count_distinct
+    sql: ${TABLE}.physician_user_id
+    drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
+
+  - measure: unique_practice_count
+    type: count_distinct
+    sql: ${TABLE}.practice_id
+    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]    
+
 - explore: entities_userloginattempt
   label: 'Log Ins'
   joins:
@@ -534,8 +549,13 @@
 
   - measure: report_count
     type: count
-    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type ]
+    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
     
+  - measure: unique_practice_count
+    type: count_distinct
+    sql: ${TABLE}.authoring_practice_id
+    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]    
+
 - explore: prescriptions
   joins:
   - join: entities_userprofile
@@ -683,6 +703,16 @@
     type: count
     drill_fields: [physician_user_id, is_erx, origin, is_controlled_substance, provider_name, provider_specialty, time_credentialed, 
           practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
+          
+  - measure: unique_physician_count
+    type: count_distinct
+    sql: ${entities_userprofile.user_id}
+    drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
+
+  - measure: unique_practice_count
+    type: count_distinct
+    sql: ${entities_practice.id}
+    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
       
 - explore: letters
   joins:
@@ -835,7 +865,16 @@
     drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, 
           practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type, is_from_patient,is_referral ]
     
+  - measure: unique_physician_count
+    type: count_distinct
+    sql: ${TABLE}.user_id
+    drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
 
+  - measure: unique_practice_count
+    type: count_distinct
+    sql: ${TABLE}.practice_id
+    drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
+      
 # - explore: access_accessaccountpreferences
 
 # - explore: access_accessregistrationaction
