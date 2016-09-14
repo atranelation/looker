@@ -9,49 +9,53 @@
     type: left_outer
     relationship: many_to_one
     sql_on: ${signed_visits.user_id} = ${entities_userprofile.user_id}
+    fields: []
   - join: entities_practice
     type: left_outer
     relationship: many_to_one 
     sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
-    fields: [app_type, emr_type, practice_name]
+    fields: []
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 
     sql_on: ${practicians_officestaff.id} = ${entities_userprofile.id}
-    fields: [id]
+    fields: []
   - join: auth_user
     type: left_outer
     relationship: many_to_one
     sql_on: ${auth_user.id} = ${entities_userprofile.user_id}
-    fields: [is_staff]  
+    fields: []  
   - join: practicians_physician
     type: left_outer
     relationship: many_to_one
     sql_on: ${practicians_physician.id} = ${entities_userprofile.id}
-    fields: [id]  
+    fields: []  
   - join: practicians_practicetophysician
     type: left_outer
     relationship: many_to_one
     sql_on: ${practicians_practicetophysician.physician_id} = ${entities_userprofile.id} AND ${practicians_practicetophysician.practice_id} = ${entities_userprofile.practice_id} 
-    fields: [account_type]
+    fields: []
   - join: shareable_medicalspecialty
     type: left_outer
     relationship: many_to_one
     sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.specialty_id}
+    fields: []
   - join: implementation_manager
     from: auth_user
     type: left_outer
     relationship: many_to_one
     sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
+    fields: []
   - join: entities_enterprise
     type: left_outer
     relationship: many_to_one
     sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+    fields: []
 
 - view: signed_visits
   derived_table:
     sql:
-      SELECT recordDate, d.id AS documentID, a.user_id AS user_id, d.documentDate As document_date
+      SELECT recordDate, d.id AS documentID, a.user_id AS user_id, d.documentDate As document_date, page_session LIKE 'import%' AS from_import
         FROM patients_document d
         LEFT JOIN auditlogging_actionlog a on d.signLog_id=a.id
           WHERE d.document_type=24 AND d.deleteLog_id is NULL
@@ -73,7 +77,7 @@
     type: number                 
     sql: ${entities_practice.id}
     
-  - dimension: physician_name
+  - dimension: provider_name
     type: string                 
     sql: CONCAT(${practicians_physician.first_name}, ' ',  ${practicians_physician.last_name})  
     
@@ -85,7 +89,7 @@
     timeframes: [time, date, month]
     sql: ${TABLE}.recordDate
     
-  - dimension_group: created_on
+  - dimension_group: visit_on
     type: time
     timeframes: [time, date, month]
     sql: ${TABLE}.document_date
@@ -95,15 +99,56 @@
     timeframes: [time, date, week, month]
     sql: ${entities_userprofile.timecredentialed_date}
 
-  - measure: signed_visits_count
+  - dimension: source
+    type: string
+    sql: CASE WHEN ${TABLE}.from_import = 0 THEN 'physician used Elation'ELSE
+              WHEN ${TABLE}.from_import = 1 THEN 'Elation imported'
+              ELSE 'unknown'
+              END
+
+  - dimension: practice_specialty 
+    sql: ${entities_practice.specialty}
+
+  - dimension: provider_specialty
+    sql: ${shareable_medicalspecialty.name}
+    
+  - dimension_group: provider_credentialed
+    type: time
+    timeframes: [time, date, week, month]
+    sql: ${entities_userprofile.timecredentialed_date}
+
+  - dimension: enterprise
+    type: string
+    sql: ${entities_enterprise.name}
+
+  - dimension: practice_state
+    type: string
+    sql: ${entities_practice.state}
+    
+  - dimension: practice_city
+    type: string
+    sql: ${entities_practice.city}
+    
+  - dimension: practice_ZIP
+    type: string
+    sql: ${entities_practice.zip}    
+    
+  - dimension: emr_type
+    type: string
+    sql: ${entities_practice.emr_type}    
+    
+  - dimension: app_type
+    type: string
+    sql: ${entities_practice.app_type}    
+    
+  - measure: visits_count
     type: count
-    drill_fields: [user_id, physician_name, timecredentialed, practice_id, practice_name, implementation_manager]
+    drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type, implementation_manager]
   
   - measure: unique_user_count
     type: count_distinct
     sql: ${TABLE}.user_id
-    drill_fields: [user_id, physician_name, timecredentialed, practice_id, practice_name, implementation_manager]
-
+    drill_fields: [user_id, provider_name, provider_specialty, time_credentialed, practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type, implementation_manager]
 
 - explore: appointments
   joins: 
