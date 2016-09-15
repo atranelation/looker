@@ -273,8 +273,8 @@
     sql: ${entities_practice.city}
     
   - dimension: practice_ZIP
-    type: string
-    sql: ${entities_practice.zip}    
+    type: zipcode
+    sql: LEFT(${entities_practice.zip}, 5)        
     
   - dimension: emr_type
     type: string
@@ -536,8 +536,8 @@
     sql: ${entities_practice.city}
     
   - dimension: practice_ZIP
-    type: string
-    sql: ${entities_practice.zip}    
+    type: zipcode
+    sql: LEFT(${entities_practice.zip}, 5)      
     
   - dimension: emr_type
     type: string
@@ -688,8 +688,8 @@
     sql: ${entities_practice.city}
     
   - dimension: practice_ZIP
-    type: string
-    sql: ${entities_practice.zip}    
+    type: zipcode
+    sql: LEFT(${entities_practice.zip}, 5)    
     
   - dimension: emr_type
     type: string
@@ -834,8 +834,8 @@
     sql: ${entities_practice.city}
     
   - dimension: practice_ZIP
-    type: string
-    sql: ${entities_practice.zip}    
+    type: zipcode
+    sql: LEFT(${entities_practice.zip}, 5)    
     
   - dimension: emr_type
     type: string

@@ -87,8 +87,8 @@
     sql: ${TABLE}.suite
 
   - dimension: zip
-    type: string
-    sql: ${TABLE}.zip
+    type: zipcode
+    sql: LEFT(${entities_practice.zip}, 5)    
 
   - dimension: enterprise
     type: string
