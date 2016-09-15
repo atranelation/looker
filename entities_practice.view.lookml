@@ -72,7 +72,7 @@
     
   - dimension: patientpractice
     type: yesno
-    sql: ${TABLE}.name CONTAINS 'Patient Practice'
+    sql: ${TABLE}.name LIKE 'Patient Practice%'
 
   - dimension: phone
     type: string
