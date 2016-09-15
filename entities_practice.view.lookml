@@ -106,5 +106,5 @@
     type: count
     filters: 
       patientpractice: no
-    drill_fields: [id, name, specialty]
+    drill_fields: [id, name, enterprise, city, state, specialty, app_type, emr_type]
 
