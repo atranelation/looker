@@ -276,7 +276,7 @@
     
   - dimension: practice_ZIP
     type: zipcode
-    sql: LEFT(${entities_practice.zip}, 5)        
+    sql: ${entities_practice.zip}        
     
   - dimension: emr_type
     type: string
@@ -540,7 +540,7 @@
     
   - dimension: practice_ZIP
     type: zipcode
-    sql: LEFT(${entities_practice.zip}, 5)      
+    sql: ${entities_practice.zip}      
     
   - dimension: emr_type
     type: string
@@ -693,7 +693,7 @@
     
   - dimension: practice_ZIP
     type: zipcode
-    sql: LEFT(${entities_practice.zip}, 5)    
+    sql: ${entities_practice.zip}    
     
   - dimension: emr_type
     type: string
@@ -840,7 +840,7 @@
     
   - dimension: practice_ZIP
     type: zipcode
-    sql: LEFT(${entities_practice.zip}, 5)    
+    sql: ${entities_practice.zip}    
     
   - dimension: emr_type
     type: string
@@ -879,7 +879,15 @@
     type: count_distinct
     sql: ${TABLE}.practice_id
     drill_fields: [practice_id, practice_name, enterprise, practice_specialty, practice_city, practice_state, practice_ZIP, emr_type, app_type]
-      
+
+- explore: entities_practice
+  joins:
+  - join: entities_enterprise
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+    fields: []
+
 # - explore: access_accessaccountpreferences
 
 # - explore: access_accessregistrationaction
@@ -1221,8 +1229,6 @@
 # - explore: entities_pbm
 
 # - explore: entities_physician_deleted
-
-# - explore: entities_practice
 
 # - explore: entities_practiceagreement
 
