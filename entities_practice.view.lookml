@@ -89,6 +89,7 @@
 
   - dimension: zip
     type: zipcode
+    map_layer: us_zipcode_tabulation_areas
     sql: LEFT(${TABLE}.zip, 5)    
 
   - dimension: enterprise

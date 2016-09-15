@@ -128,6 +128,7 @@
     
   - dimension: practice_ZIP
     type: zipcode
+    map_layer: us_zipcode_tabulation_areas
     sql: ${entities_practice.zip}    
     
   - dimension: emr_type
@@ -276,6 +277,7 @@
     
   - dimension: practice_ZIP
     type: zipcode
+    map_layer: us_zipcode_tabulation_areas
     sql: ${entities_practice.zip}        
     
   - dimension: emr_type
@@ -540,6 +542,7 @@
     
   - dimension: practice_ZIP
     type: zipcode
+    map_layer: us_zipcode_tabulation_areas
     sql: ${entities_practice.zip}      
     
   - dimension: emr_type
@@ -693,6 +696,7 @@
     
   - dimension: practice_ZIP
     type: zipcode
+    map_layer: us_zipcode_tabulation_areas
     sql: ${entities_practice.zip}    
     
   - dimension: emr_type
@@ -840,6 +844,7 @@
     
   - dimension: practice_ZIP
     type: zipcode
+    map_layer: us_zipcode_tabulation_areas
     sql: ${entities_practice.zip}    
     
   - dimension: emr_type
