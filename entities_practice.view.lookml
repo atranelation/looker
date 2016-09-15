@@ -72,6 +72,7 @@
     
   - dimension: patientpractice
     type: yesno
+    hidden: true
     sql: ${TABLE}.name LIKE 'Patient Practice%'
 
   - dimension: phone
@@ -103,5 +104,7 @@
     
   - measure: count
     type: count
+    filters: 
+      patientpractice: no
     drill_fields: [id, name, specialty]
 
