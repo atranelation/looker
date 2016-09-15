@@ -89,7 +89,7 @@
 
   - dimension: zip
     type: zipcode
-    sql: LEFT(${entities_practice.zip}, 5)    
+    sql: ${entities_practice.zip}    
 
   - dimension: enterprise
     type: string
