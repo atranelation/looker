@@ -69,6 +69,10 @@
   - dimension: practice_name
     type: string
     sql: ${TABLE}.name
+    
+  - dimension: patientpractice
+    type: yesno
+    sql: ${TABLE}.name CONTAINS 'Patient Practice'
 
   - dimension: phone
     type: string
