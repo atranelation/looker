@@ -79,6 +79,7 @@
 
   - dimension: state
     type: string
+    map_layer: us_states
     sql: ${TABLE}.state
 
   - dimension: suite

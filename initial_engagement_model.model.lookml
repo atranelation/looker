@@ -119,6 +119,7 @@
 
   - dimension: practice_state
     type: string
+    map_layer: us_states
     sql: ${entities_practice.state}
     
   - dimension: practice_city
@@ -127,7 +128,7 @@
     
   - dimension: practice_ZIP
     type: zipcode
-    sql: ${entities_practice.zip}    
+    sql: LEFT(${entities_practice.zip}, 5)    
     
   - dimension: emr_type
     type: string
@@ -266,6 +267,7 @@
 
   - dimension: practice_state
     type: string
+    map_layer: us_states
     sql: ${entities_practice.state}
     
   - dimension: practice_city
@@ -529,6 +531,7 @@
 
   - dimension: practice_state
     type: string
+    map_layer: us_states
     sql: ${entities_practice.state}
     
   - dimension: practice_city
@@ -681,6 +684,7 @@
 
   - dimension: practice_state
     type: string
+    map_layer: us_states
     sql: ${entities_practice.state}
     
   - dimension: practice_city
@@ -827,6 +831,7 @@
 
   - dimension: practice_state
     type: string
+    map_layer: us_states
     sql: ${entities_practice.state}
     
   - dimension: practice_city
