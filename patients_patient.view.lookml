@@ -115,6 +115,10 @@
   - dimension: sex
     type: string
     sql: ${TABLE}.sex
+  
+  - dimension: age
+    type: number
+    sql: TODAY() - ${TABLE}.dob
 
   - dimension: ssn
     hidden: true
@@ -133,5 +137,5 @@
 
   - measure: count
     type: count
-    drill_fields: [id, city]
+    drill_fields: [id, sex, city]
 
