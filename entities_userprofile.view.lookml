@@ -72,6 +72,16 @@
   - dimension: practice_name 
     sql: ${entities_practice.practice_name}
   
+  - dimension: practice_city
+    sql: ${entities_practice.city}
+    
+  - dimension: practice_state
+    sql: ${entities_practice.city}
+
+  - dimension: practice_ZIP
+    type: zipcode
+    sql: ${entities_practice.zip}
+
   - dimension: emr_type 
     hidden: true
     sql: ${entities_practice.emr_type}
@@ -79,6 +89,9 @@
   - dimension: app_type 
     hidden: true
     sql: ${entities_practice.app_type}
+    
+  - dimension: enterprise
+    sql: ${entities_enterprise.name}  
     
   - dimension: is_office_staff 
     hidden: true
