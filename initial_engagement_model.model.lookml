@@ -660,24 +660,6 @@
     fields: []
 
 - view: prescriptions
-  sets: 
-    practice_info:
-      - practice_id
-      - practice_name
-      - practice_specialty
-      - enterprise
-      - practice_city
-      - practice_state
-      - practice_ZIP
-      - emr_type
-      - app_type
-    provider_info:
-      - physician_user_id
-      - provider_name
-      - provider_specialty
-      - provider_credentialed_time
-      - provider_credentialed_date
-      - provider_credentialed_month
   derived_table:
     sql: 
       SELECT mm.doc_id, al1.recordDate AS create_date, al2.recordDate AS sign_date, mm.origin, med.isControlled AS `controlled_substance`, mmof.type = 'surescripts' AS `is_erx`, mmof.state IN ('failure', 'error') AS `erx_failed`
