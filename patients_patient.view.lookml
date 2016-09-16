@@ -118,7 +118,7 @@
   
   - dimension: age
     type: number
-    sql: TODAY() - ${TABLE}.dob
+    sql: (CURDATE() - ${TABLE}.dob)/365.25
 
   - dimension: ssn
     hidden: true
