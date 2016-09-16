@@ -80,7 +80,7 @@
             JOIN entities_practicesettings ps on ps.practice_id=pr.id
             LEFT JOIN reference_patientproblem_icd9_codes ppicd9 ON ppicd9.patientproblem_id = i.id
         WHERE recordDate > '2013-01-01'    
-    sql_trigger_value: SELECT CURDATE()
+    sql_trigger_value: SELECT FLOOR(UNIX_TIMESTAMP() / (24*7*60*60))
     indexes: [addressedDate, id]
     
   fields:
