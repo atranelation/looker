@@ -140,7 +140,7 @@
   
   - dimension: age
     type: number
-    sql: TRUNCATE(DATEDIFF(CURDATE(), ${TABLE}.dob)/365.25, 0)
+    sql: TRUNCATE(DATEDIFF(${TABLE}.dob, CURDATE())/365.25, 0)
     value_format: '0'
 
   - dimension: ssn
