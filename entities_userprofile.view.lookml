@@ -156,7 +156,6 @@
     
   - measure: cumulative_user_count
     type: running_total
-    drill_fields: [id, practice_name, provider_name, user_type, provider_specialty, implementation_manager]
 
   - measure: unique_practice_count
     type: count_distinct
