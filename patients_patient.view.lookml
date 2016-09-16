@@ -119,6 +119,7 @@
   - dimension: age
     type: number
     sql: DATEDIFF(CURDATE(), ${TABLE}.dob)/365.25
+    value_format: '0'
 
   - dimension: ssn
     hidden: true
