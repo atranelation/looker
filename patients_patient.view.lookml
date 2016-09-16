@@ -1,5 +1,27 @@
 - view: patients_patient
   sql_table_name: el8_app_1.patients_patient
+  sets: 
+    practice_info:
+      - practice_id
+      - practice_name
+      - practice_specialty
+      - enterprise
+      - practice_city
+      - practice_state
+      - practice_ZIP
+      - emr_type
+      - app_type
+    provider_info:
+      - provider_user_id
+      - provider_name
+      - provider_specialty
+    patient_info:
+      - id
+      - age
+      - sex
+      - patient_city
+      - patient_state
+      - patient_ZIP
   fields:
 
   - dimension: id
@@ -135,6 +157,68 @@
     hidden: true
     type: yesno
     sql: ${TABLE}.verified
+    
+  - dimension: practice_id 
+    type: number
+    sql: ${entities_practice.id}
+
+  - dimension: practice_name 
+    type: string
+    sql: ${entities_practice.practice_name}
+    
+  - dimension: practice_specialty
+    type: string
+    sql: ${entities_practice.specialty}
+    
+  - dimension: enterprise
+    type: string
+    sql: ${entities_enterprise.name}
+
+  - dimension: practice_state
+    type: string
+    map_layer: us_states
+    sql: ${entities_practice.state}
+    
+  - dimension: practice_city
+    type: string
+    sql: ${entities_practice.city}
+    
+  - dimension: practice_ZIP
+    type: zipcode
+    map_layer: us_zipcode_tabulation_areas
+    sql: ${entities_practice.zip}    
+    
+  - dimension: emr_type
+    type: string
+    sql: ${entities_practice.emr_type}    
+    
+  - dimension: app_type
+    type: string
+    sql: ${entities_practice.app_type}    
+
+  - dimension: provider_user_id
+    type: number
+    sql:  ${practicians_physician.user_id}
+
+  - dimension: provider_name
+    sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
+  
+  - dimension: provider_specialty
+    sql: ${shareable_medicalspecialty.name}
+
+  - dimension: patient_state
+    type: string
+    map_layer: us_states
+    sql: ${patients_patientaddress.state}
+    
+  - dimension: patient_city
+    type: string
+    sql: ${patients_patientaddress.city}
+    
+  - dimension: patient_ZIP
+    type: zipcode
+    map_layer: us_zipcode_tabulation_areas
+    sql: ${patients_patientaddress.zip}  
 
   - measure: count
     type: count
