@@ -224,13 +224,13 @@
     type: number
     sql: ${patients_patientproviderteammember.id}
 
+  - dimension: provider_team_size
+    type: number
+    sql: COUNT (DISTINCT ${patients_patientproviderteammember.id})
+
   - measure: count
     type: count
     drill_fields: [practice_info, provider_info, patient_info]
     
-  - measure: provider_team_size
-    type: count_distinct
-    sql: ${patients_patientproviderteammember.id}
-    drill_fields: [practice_info, provider_info, patient_info]
-    
+
 
