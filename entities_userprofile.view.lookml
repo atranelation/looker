@@ -128,7 +128,6 @@
       END
 
   - dimension: provider_name
-    hidden: true
     sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
     
   - dimension: provider_specialty
