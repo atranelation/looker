@@ -662,7 +662,7 @@
 - view: prescriptions
   derived_table:
     sql: 
-      SELECT mm.doc_id, al1.recordDate AS create_date, al2.recordDate AS sign_date, mm.origin, med.isControlled AS `controlled_substance`, mmof.type = 'surescripts' AS `is_erx`, mmof.state IN ('failure', 'error') AS `erx_failed`
+      SELECT mm.doc_id, mm.prescribing_physician_id AS user_id, al1.recordDate AS create_date, al2.recordDate AS sign_date, mm.origin, med.isControlled AS `controlled_substance`, mmof.type = 'surescripts' AS `is_erx`, mmof.state IN ('failure', 'error') AS `erx_failed`
         FROM meds_medorder mm 
           JOIN patients_document pd ON pd.id = mm.doc_id 
           JOIN auditlogging_actionlog al1 on al1.id = pd.createLog_id 
