@@ -3,8 +3,8 @@
   fields:
 
   - dimension: id
+    label: patient_id
     primary_key: true
-    hidden: true
     type: number
     sql: ${TABLE}.id
 
