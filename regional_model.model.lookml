@@ -72,6 +72,10 @@
     type: left_outer
     relationship: one_to_one
     sql_on: ${patients_practicetopatient.id} = ${patients_patientproviderteam.practice_to_patient_id}
+  - join: patients_patientproviderteammember
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${patients_patientproviderteammember.team_id} = ${patients_patientproviderteam.id}
 
 
 
