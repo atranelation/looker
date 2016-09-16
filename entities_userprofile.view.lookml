@@ -156,6 +156,7 @@
     
   - measure: cumulative_user_count
     type: running_total
+    sql: ${id}
 
   - measure: unique_practice_count
     type: count_distinct
