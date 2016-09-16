@@ -55,6 +55,15 @@
     sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
     fields: []
 
+- explore: patients_patient
+  label: Patients
+  joins: 
+  - join: patients_patientaddress
+    type: inner
+    relationship: one_to_one
+    sql_on: ${patients_patient.id} = ${patients_patientaddress.patient_id}
+
+
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.
 #
