@@ -676,7 +676,7 @@
   fields:
   - dimension: user_id
     type: number
-    sql: ${entities_userprofile.user_id}
+    sql: ${TABLE}.prescribing_physician_id
     
   - dimension_group: prescription_create
     type: time
