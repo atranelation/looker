@@ -141,7 +141,7 @@
     timeframes: [time, date, week, month]
     sql: ${auth_user.last_login_date}
 
-  - dimension_group: date_joined
+  - dimension_group: joined
     type: time
     timeframes: [time, date, week, month]
     sql: ${auth_user.date_joined_date}
