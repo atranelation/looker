@@ -64,34 +64,42 @@
     type: inner
     relationship: one_to_one
     sql_on: ${patients_patient.id} = ${patients_patientaddress.patient_id}
+    fields: []
   - join: patients_practicetopatient
     type: left_outer
     relationship: one_to_one
     sql_on: ${patients_patient.id} = ${patients_practicetopatient.patient_id}
+    fields: []
   - join: patients_patientproviderteam
     type: left_outer
     relationship: one_to_one
     sql_on: ${patients_practicetopatient.id} = ${patients_patientproviderteam.practice_to_patient_id}
+    fields: []
   - join: patients_patientproviderteammember
     type: left_outer
     relationship: many_to_one
     sql_on: ${patients_patientproviderteammember.team_id} = ${patients_patientproviderteam.id}
+    fields: []
   - join: practicians_physician
     type: left_outer
     relationship: many_to_one
     sql_on: ${patients_practicetopatient.primary_physician_user_id} = ${practicians_physician.user_id}
+    fields: []
   - join: shareable_medicalspecialty
     type: left_outer
     relationship: many_to_one
     sql_on: ${shareable_medicalspecialty.id} = ${practicians_physician.specialty_id}
+    fields: []
   - join: entities_enterprise
     type: left_outer
     relationship: many_to_one
     sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+    fields: []
   - join: entities_practice
     type: left_outer
     relationship: many_to_one
     sql_on: ${entities_practice.id} = ${patients_practicetopatient.practice_id}
+    fields: []
 
 
 
