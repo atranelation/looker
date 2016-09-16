@@ -76,8 +76,8 @@
     sql:
       SELECT recordDate, d.id AS documentID, a.user_id AS user_id, d.documentDate As document_date, page_session LIKE 'import%' AS from_import
         FROM patients_document d
-        LEFT JOIN auditlogging_actionlog a on d.signLog_id=a.id
-          WHERE d.document_type=24 AND d.deleteLog_id is NULL
+        LEFT JOIN auditlogging_actionlog a on d.signLog_id=a.id 
+          WHERE d.document_type=24 AND d.deleteLog_id is NULL AND a.actionType= 'sign' AND a.recordClass = 'VisitNote'
     sql_trigger_value: SELECT CURDATE()
     indexes: [recordDate, user_id, documentID]
 
@@ -845,7 +845,7 @@
           JOIN patients_document pd ON pd.id = ll.doc_id 
           JOIN auditlogging_actionlog alal ON alal.id = pd.signLog_id 
           JOIN entities_practice ep on ep.id = pd.authoring_practice_id 
-        WHERE pd.deleteLog_id IS NULL
+        WHERE pd.deleteLog_id IS NULL AND alal.actionType = 'sign' AND alal.recordClass = 'Letter'
     sql_trigger_value: SELECT CURDATE()
     indexes: [letter_id, sign_date]
 
