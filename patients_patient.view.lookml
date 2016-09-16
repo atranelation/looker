@@ -219,8 +219,18 @@
     type: zipcode
     map_layer: us_zipcode_tabulation_areas
     sql: ${patients_patientaddress.zip}  
+  
+  - dimension: providerteammember_id
+    type: number
+    sql: ${patients_patientproviderteammember.id}
 
   - measure: count
     type: count
-    drill_fields: [id, sex, city]
+    drill_fields: [practice_info, provider_info, patient_info]
+    
+  - measure: provider_team_size
+    type: count_distinct
+    sql: ${patients_patientproviderteammember.id}
+    drill_fields: [practice_info, provider_info, patient_info]
+    
 
