@@ -52,6 +52,7 @@
 
   - dimension_group: dob
     type: time
+    hidden: true
     timeframes: [date, week, month, year]
     convert_tz: false
     sql: ${TABLE}.dob
