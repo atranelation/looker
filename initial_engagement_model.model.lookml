@@ -614,7 +614,7 @@
   - join: entities_userprofile
     type: left_outer
     relationship: many_to_one
-    sql_on: ${prescriptions.user_id} = ${entities_userprofile.user_id}
+    sql_on: ${prescriptions.user_id} = ${entities_userprofile.id}
     fields: []
   - join: entities_practice
     type: left_outer
