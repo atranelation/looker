@@ -223,9 +223,9 @@
     type: number
     sql: ${patients_patientproviderteammember.id}
 
-  - dimension: provider_team_size
-    type: number
-    sql: COUNT(DISTINCT ${patients_patientproviderteammember.id})
+  - measure: provider_team_size
+    type: count_distinct 
+    sql: ${patients_patientproviderteammember.id}
 
   - measure: count
     type: count
