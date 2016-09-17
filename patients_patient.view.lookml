@@ -221,6 +221,7 @@
     sql: ${patients_patientaddress.zip}  
   
   - dimension: providerteammember_id
+    hidden: true
     type: number
     sql: ${patients_patientproviderteammember.id}
 
