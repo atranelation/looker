@@ -187,11 +187,11 @@
     map_layer: us_zipcode_tabulation_areas
     sql: ${entities_practice.zip}    
     
-  - dimension: emr_type
+  - dimension: practice_emr_type
     type: string
     sql: ${entities_practice.emr_type}    
     
-  - dimension: app_type
+  - dimension: practice_app_type
     type: string
     sql: ${entities_practice.app_type}    
 
