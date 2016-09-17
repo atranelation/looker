@@ -100,10 +100,10 @@
     relationship: many_to_one
     sql_on: ${entities_practice.id} = ${patients_practicetopatient.practice_id}
     fields: []
-  - join: auditlogging_actionlog
-    relationship: one_to_one
-    sql_on: ${patients_patient.create_log_id} = ${auditlogging_actionlog.id} AND ${auditlogging_actionlog.action_type} = 'create' AND ${auditlogging_actionlog.record_class} = 'Patient' 
-    fields: []
+#  - join: auditlogging_actionlog
+#    relationship: one_to_one
+#    sql_on: ${patients_patient.create_log_id} = ${auditlogging_actionlog.id} AND ${auditlogging_actionlog.action_type} = 'create' AND ${auditlogging_actionlog.record_class} = 'Patient' 
+#    fields: []
 
 
 
