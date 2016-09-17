@@ -29,7 +29,7 @@
 
   - dimension_group: record
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [time, date, week, month, year]
     sql: ${TABLE}.recordDate
 
   - dimension: record_id

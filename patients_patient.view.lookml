@@ -224,6 +224,12 @@
     hidden: true
     type: number
     sql: ${patients_patientproviderteammember.id}
+    
+#   - dimension_group: chart_created
+#     type: time
+#     timeframes: [date, month, year]
+#     sql: ${auditlogging_actionlog.record}
+
 
   - measure: provider_team_size
     type: count_distinct 
