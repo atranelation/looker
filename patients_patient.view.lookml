@@ -230,7 +230,6 @@
 #     timeframes: [date, month, year]
 #     sql: ${auditlogging_actionlog.record}
 
-
   - measure: provider_team_size
     type: count_distinct 
     sql: ${patients_patientproviderteammember.id}
