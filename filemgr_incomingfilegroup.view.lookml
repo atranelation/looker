@@ -154,6 +154,7 @@
     
   - dimension: Softlinx_fax_number
     type: number
+    value_format: '0'
     sql: ${entities_practicefax.fax} 
   
   - measure: incoming_images_count
