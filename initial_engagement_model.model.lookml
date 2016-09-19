@@ -55,23 +55,8 @@
 
 - view: signed_visits
   sets: 
-    practice_info:
-      - practice_id
-      - practice_name
-      - practice_specialty
-      - enterprise
-      - practice_city
-      - practice_state
-      - practice_ZIP
-      - emr_type
-      - app_type
-    provider_info:
-      - user_id
-      - provider_name
-      - provider_specialty
-      - provider_credentialed_time
-      - provider_credentialed_date
-      - provider_credentialed_month
+    practice_info: [practice_id, practice_name, practice_specialty, enterprise, practice_city, practice_state, emr_type, app_type]
+    provider_info: [user_id, provider_name, provider_specialty, provider_credentialed_date, provider_credentialed_month]
   derived_table:
     sql:
       SELECT recordDate, d.id AS documentID, a.user_id AS user_id, d.documentDate As document_date, page_session LIKE 'import%' AS from_import
