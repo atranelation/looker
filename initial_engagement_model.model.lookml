@@ -57,6 +57,7 @@
   sets: 
     practice_info: [practice_id, practice_name, practice_specialty, enterprise, practice_city, practice_state, emr_type, app_type]
     provider_info: [user_id, provider_name, provider_specialty, provider_credentialed_date, provider_credentialed_month]
+    practice_and_provider_info: [practice_info*, provider_info*]
   derived_table:
     sql:
       SELECT recordDate, d.id AS documentID, a.user_id AS user_id, d.documentDate As document_date, page_session LIKE 'import%' AS from_import
@@ -149,7 +150,7 @@
   - measure: unique_user_count
     type: count_distinct
     sql: ${TABLE}.user_id
-    drill_fields: practice_info*, provider_info*
+    drill_fields: practice_and_provider_info*
 
   - measure: unique_practice_count
     type: count_distinct
