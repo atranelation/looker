@@ -85,6 +85,12 @@
   - dimension: master_id
     type: number
     sql: ${TABLE}.master_id
+    
+  - dimension: master_patient_id
+    type: number
+    sql: CASE WHEN ${TABLE}.master_id IS NOT NULL THEN ${TABLE}.master_id
+          ELSE ${TABLE}.id
+        END
 
   - dimension: middle_name
     hidden: true
@@ -234,7 +240,11 @@
     type: count_distinct 
     sql: ${patients_patientproviderteammember.id}
 
-  - measure: count
+  - measure: patient_count
+    type: count_distinct 
+    sql: ${TABLE}.master_patient_id
+
+  - measure: chart_count
     type: count
     drill_fields: [practice_info, provider_info, patient_info]
     
