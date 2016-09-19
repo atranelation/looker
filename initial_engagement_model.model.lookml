@@ -241,11 +241,16 @@
       - provider_credentialed_month
   derived_table:
     sql:
-      SELECT appt.id AS `appointment_id`, appt.practice_id, appt.physician_user_id, al.recordDate, appt.appt_time, appt.duration, sas.status 
-        FROM scheduler_appointment appt 
-          JOIN auditlogging_actionlog al ON al.id=appt.createLog_id
-          JOIN scheduler_appointmentstatus sas ON sas.appointment_id=appt.id 
-          LEFT JOIN scheduler_appointmentstatus sas2 ON sas2.appointment_id=appt.id AND (sas.id < sas2.id OR sas.id = sas2.id) 
+      SELECT appointment.id AS `appointment_id`, appointment.practice_id, appointment.physician_user_id, actionlog.recordDate, 
+          appointmentreminder.reminder_type, appointment.appt_time, appointment.duration, appointmentstatus.status, 
+            apivendor.name AS integration_vendor 
+        FROM scheduler_appointment appointment
+          JOIN auditlogging_actionlog actionlog ON actionlog.id = appointment.createLog_id
+          JOIN scheduler_appointmentstatus appointmentstatus ON appointmentstatus.appointment_id = appointment.id 
+          LEFT JOIN scheduler_appointmentstatus sas2 ON sas2.appointment_id = appointment.id AND (appointmentstatus.id < sas2.id OR appointmentstatus.id = sas2.id) 
+          LEFT JOIN scheduler_appointmentreminder appointmentreminder ON appointment.id = appointmentreminder.appointment_id AND appointmentreminder.status = 'sent'
+          LEFT JOIN api_appointmentvendoridentifier appointmentvendoridentifier ON appointmentvendoridentifier.appointment_id = appointment.id
+          LEFT JOIN api_apivendor apivendor ON apivendor.id = appointmentvendoridentifier.vendor_id
     sql_trigger_value: SELECT CURDATE()
     indexes: [recordDate, status, practice_id, physician_user_id]
     
@@ -263,7 +268,7 @@
     type: number
     sql: ${TABLE}.physician_user_id
     
-  - dimension_group: record
+  - dimension_group: create
     type: time
     timeframes: [date, month, year]
     sql: ${TABLE}.recordDate
@@ -280,6 +285,14 @@
   - dimension: status
     type: string
     sql: ${TABLE}.status
+    
+  - dimension: reminder_type
+    type: string
+    sql: ${TABLE}.reminder_type
+    
+  - dimension: integration_vendor
+    type: string
+    sql: ${TABLE}.integration_vendor
     
   - dimension: practice_specialty 
     sql: ${entities_practice.specialty}
