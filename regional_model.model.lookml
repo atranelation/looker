@@ -105,6 +105,8 @@
 #     sql_on: ${patients_patient.create_log_id} = ${auditlogging_actionlog.id} AND ${auditlogging_actionlog.action_type} = 'create' AND ${auditlogging_actionlog.record_class} = 'Patient' 
 #     fields: []
 
+- explore: practicians_canonicalphysician
+  label: EPN Providers
 
 
 
