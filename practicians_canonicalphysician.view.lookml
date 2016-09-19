@@ -24,10 +24,12 @@
     sql: ${TABLE}.city
 
   - dimension: contact_type
+    hidden: true
     type: string
     sql: ${TABLE}.contact_type
 
   - dimension: create_log_id
+    hidden: true
     type: number
     sql: ${TABLE}.createLog_id
 
@@ -36,6 +38,7 @@
     sql: ${TABLE}.credentials
 
   - dimension: delete_log_id
+    hidden: true
     type: number
     sql: ${TABLE}.deleteLog_id
 
@@ -44,6 +47,7 @@
     sql: ${TABLE}.direct_address
 
   - dimension_group: dob
+    hidden: true
     type: time
     timeframes: [date, week, month]
     convert_tz: false
@@ -75,8 +79,13 @@
     sql: ${TABLE}.lastName
 
   - dimension: middle_name
+    hidden: true
     type: string
     sql: ${TABLE}.middleName
+
+  - dimension: provider_name
+    type: string
+    sql: CONCAT(${TABLE}.firstName, ' ', ${TABLE}.middleName, ' ', ${TABLE}.lastName)
 
   - dimension: npi
     type: string
@@ -95,30 +104,40 @@
     sql: ${TABLE}.practicing_status
 
   - dimension: prefix
+    hidden: true
     type: string
     sql: ${TABLE}.prefix
 
   - dimension: profile
+    hidden: true
     type: string
     sql: ${TABLE}.profile
 
   - dimension: sex
+    hidden: true
     type: string
     sql: ${TABLE}.sex
 
   - dimension: specialty_id
+    hidden: true
     type: number
     sql: ${TABLE}.specialty_id
+
+  - dimension: specialty
+    type: string
+    sql: ${shareable_medicalspecialty.name}
 
   - dimension: state
     type: string
     sql: ${TABLE}.state
 
   - dimension: suffix
+    hidden: true
     type: string
     sql: ${TABLE}.suffix
 
   - dimension: suite
+    hidden: true
     type: string
     sql: ${TABLE}.suite
 
@@ -128,5 +147,5 @@
 
   - measure: count
     type: count
-    drill_fields: [id, org_name, first_name, last_name, middle_name]
+    drill_fields: [npi]
 
