@@ -147,5 +147,5 @@
 
   - measure: count
     type: count
-    drill_fields: [npi]
+    drill_fields: [npi, provider_name, specialty, city, state]
 
