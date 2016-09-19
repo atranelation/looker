@@ -433,7 +433,7 @@
   - join: entities_practicefax
     type: left_outer
     relationship: many_to_one
-    sql_on: ${entities_practice.id} = ${entities_practicefax.practice_id}
+    sql_on: ${entities_practice.id} = ${entities_practicefax.practice_id} AND ${entities_practicefax.delete_log_id} IS NULL 
     fields: []
   
 - explore: messaging_threadmessage
