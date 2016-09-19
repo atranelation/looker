@@ -665,8 +665,8 @@
       SELECT mm.doc_id, al1.user_id AS user_id, al1.recordDate AS create_date, al2.recordDate AS sign_date, mm.origin, med.isControlled AS `controlled_substance`, mmof.type = 'surescripts' AS `is_erx`, mmof.state IN ('failure', 'error') AS `erx_failed`
         FROM meds_medorder mm 
           JOIN patients_document pd ON pd.id = mm.doc_id 
-          JOIN auditlogging_actionlog al1 on al1.id = pd.createLog_id AND al1.recordClass = 'PatientMed' AND al1.actionType = 'create'
-          JOIN auditlogging_actionlog al2 on al2.id= pd.signLog_id AND al2.recordClass = 'PatientMed'  AND al2.actionType = 'sign'
+          JOIN auditlogging_actionlog al1 on al1.id = pd.createLog_id AND al1.recordClass = 'MedOrder' AND al1.actionType = 'create'
+          JOIN auditlogging_actionlog al2 on al2.id= pd.signLog_id AND al2.recordClass = 'MedOrder'  AND al2.actionType = 'sign'
           JOIN shareable_medication med on med.id = mm.medication_id
           LEFT JOIN meds_medorderfulfillment mmof ON mm.fulfillment_id = mmof.id
         WHERE pd.deleteLog_id IS NULL
