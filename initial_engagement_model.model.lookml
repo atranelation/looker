@@ -144,17 +144,17 @@
     
   - measure: visit_notes_count
     type: count
-    drill_fields: [practice_info, provider_info]
+    drill_fields: practice_info*, provider_info*
   
   - measure: unique_user_count
     type: count_distinct
     sql: ${TABLE}.user_id
-    drill_fields: [practice_info, provider_info]
+    drill_fields: practice_info*, provider_info*
 
   - measure: unique_practice_count
     type: count_distinct
     sql: ${entities_practice.id}
-    drill_fields: [practice_info, provider_info]
+    drill_fields: practice_info*
 
 - explore: appointments
   joins: 
