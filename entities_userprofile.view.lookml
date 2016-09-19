@@ -76,7 +76,7 @@
     sql: ${entities_practice.city}
     
   - dimension: practice_state
-    sql: ${entities_practice.city}
+    sql: ${entities_practice.state}
 
   - dimension: practice_ZIP
     type: zipcode
