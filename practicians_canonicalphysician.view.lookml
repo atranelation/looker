@@ -9,10 +9,12 @@
     sql: ${TABLE}.id
 
   - dimension: accepting_insurance
+    hidden: true
     type: yesno
     sql: ${TABLE}.accepting_insurance
 
   - dimension: accepting_new_patients
+    hidden: true
     type: yesno
     sql: ${TABLE}.accepting_new_patients
 
@@ -68,14 +70,17 @@
     sql: ${TABLE}.fax
 
   - dimension: first_name
+    hidden: true
     type: string
     sql: ${TABLE}.firstName
 
   - dimension: insurance_accepted
+    hidden: true
     type: string
     sql: ${TABLE}.insurance_accepted
 
   - dimension: last_name
+    hidden: true
     type: string
     sql: ${TABLE}.lastName
 
