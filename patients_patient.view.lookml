@@ -244,8 +244,8 @@
   - measure: patient_count
     type: count_distinct 
     sql: ${patients_patient.master_patient_id}
-    drill_fields: [practice_info, provider_info]
+    drill_fields: [practice_info, patient_info]
 
   - measure: chart_count
     type: count
-    drill_fields: [practice_info, provider_info]
+    drill_fields: [practice_info, patient_info]
