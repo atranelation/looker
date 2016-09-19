@@ -145,7 +145,7 @@
     
   - measure: visit_notes_count
     type: count
-    drill_fields: practice_info*, provider_info*
+    drill_fields: practice_and_provider_info*
   
   - measure: unique_user_count
     type: count_distinct
@@ -208,23 +208,9 @@
 
 - view: appointments
   sets: 
-    practice_info:
-      - practice_id
-      - practice_name
-      - practice_specialty
-      - enterprise
-      - practice_city
-      - practice_state
-      - practice_ZIP
-      - emr_type
-      - app_type
-    provider_info:
-      - user_id
-      - provider_name
-      - provider_specialty
-      - provider_credentialed_time
-      - provider_credentialed_date
-      - provider_credentialed_month
+    practice_info: [practice_id, practice_name, practice_specialty, enterprise, practice_city, practice_state, emr_type, app_type]
+    provider_info: [user_id, provider_name, provider_specialty, provider_credentialed_date, provider_credentialed_month]
+    practice_and_provider_info: [practice_info*, provider_info*]
   derived_table:
     sql:
       SELECT appointment.id AS `appointment_id`, appointment.practice_id, appointment.physician_user_id, actionlog.recordDate, 
@@ -322,20 +308,20 @@
   - dimension: app_type
     type: string
     sql: ${entities_practice.app_type}    
-    
+
   - measure: appointment_count
     type: count
-    drill_fields: [appointment_time, practice_info, provider_info]
+    drill_fields: [appointment_time, practice_and_provider_info*]
 
   - measure: unique_user_count
     type: count_distinct
     sql: ${TABLE}.physician_user_id
-    drill_fields: [practice_info, provider_info]
+    drill_fields: practice_and_provider_info*
 
   - measure: unique_practice_count
     type: count_distinct
     sql: ${TABLE}.practice_id
-    drill_fields: [practice_info, provider_info]    
+    drill_fields: practice_and_provider_info*   
 
 - explore: entities_userloginattempt
   label: 'Log Ins'
@@ -444,6 +430,11 @@
     relationship: many_to_one
     sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
     fields: []
+  - join: entities_practicefax
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${entities_practice.id} = ${entities_practicefax.practice_id}
+    fields: []
   
 - explore: messaging_threadmessage
   label: Messages Sent
@@ -516,16 +507,7 @@
 
 - view: reports
   sets: 
-    practice_info:
-      - practice_id
-      - practice_name
-      - practice_specialty
-      - enterprise
-      - practice_city
-      - practice_state
-      - practice_ZIP
-      - emr_type
-      - app_type
+    practice_info: [practice_id, practice_name, practice_specialty, enterprise, practice_city, practice_state, emr_type, app_type]
   derived_table:
     sql:
       SELECT pd.id, pd.authoring_practice_id, pd.documentDate AS `report_date`, al1.recordDate AS `create_date`, al2.recordDate AS `sign_date`, 
@@ -601,12 +583,12 @@
 
   - measure: report_count
     type: count
-    drill_fields: [practice_info]
+    drill_fields: practice_info*
     
   - measure: unique_practice_count
     type: count_distinct
     sql: ${TABLE}.authoring_practice_id
-    drill_fields: [practice_info]    
+    drill_fields: practice_info*
 
 - explore: prescriptions
   joins:
@@ -755,17 +737,17 @@
     
   - measure: prescription_count
     type: count
-    drill_fields: [is_erx, origin, is_controlled_substance, practice_info, provider_info]
+    drill_fields: [is_erx, origin, is_controlled_substance, practice_and_provider_info*]
           
   - measure: unique_physician_count
     type: count_distinct
     sql: ${entities_userprofile.user_id}
-    drill_fields: [practice_info, provider_info]
+    drill_fields: practice_and_provider_info*
 
   - measure: unique_practice_count
     type: count_distinct
     sql: ${entities_practice.id}
-    drill_fields: [practice_info]
+    drill_fields: practice_info*
       
 - explore: letters
   joins:
@@ -819,23 +801,9 @@
     
 - view: letters
   sets: 
-    practice_info:
-      - practice_id
-      - practice_name
-      - practice_specialty
-      - enterprise
-      - practice_city
-      - practice_state
-      - practice_ZIP
-      - emr_type
-      - app_type
-    provider_info:
-      - user_id
-      - provider_name
-      - provider_specialty
-      - provider_credentialed_time
-      - provider_credentialed_date
-      - provider_credentialed_month
+    practice_info: [practice_id, practice_name, practice_specialty, enterprise, practice_city, practice_state, emr_type, app_type]
+    provider_info: [user_id, provider_name, provider_specialty, provider_credentialed_date, provider_credentialed_month]
+    practice_and_provider_info: [practice_info*, provider_info*]
   derived_table:
     sql: 
       SELECT pd.id AS letter_id, pd.authoring_practice_id AS practice_id, alal.recordDate AS sign_date, ll.send_to_patient AS `to_patient`, ll.delivery_method AS deliver_method, ll.fax_attachments AS fax_attachments, 
@@ -935,17 +903,17 @@
 
   - measure: report_count
     type: count
-    drill_fields: [practice_info, provider_info, is_from_patient,is_referral ]
+    drill_fields: [practice_and_provider_info*, is_from_patient,is_referral ]
     
   - measure: unique_physician_count
     type: count_distinct
     sql: ${TABLE}.user_id
-    drill_fields: [practice_info, provider_info,]
+    drill_fields: practice_and_provider_info*
 
   - measure: unique_practice_count
     type: count_distinct
     sql: ${TABLE}.practice_id
-    drill_fields: [practice_info]
+    drill_fields: practice_info*
 
 - explore: entities_practice
   label: Practices

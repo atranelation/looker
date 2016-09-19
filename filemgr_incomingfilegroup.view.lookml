@@ -151,6 +151,10 @@
   - dimension: is_fax
     type: string
     sql: CASE WHEN ${TABLE}.source = 'user' THEN 'User Upload' ELSE 'Fax' END
+    
+  - dimension: Softlinx_fax_number
+    type: number
+    sql: ${entities_practicefax.fax} 
   
   - measure: incoming_images_count
     type: count
