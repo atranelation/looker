@@ -224,19 +224,15 @@
     map_layer: us_zipcode_tabulation_areas
     sql: ${patients_patientaddress.zip}  
   
-  - dimension: providerteammember_id
-    hidden: true
+  - dimension: number_of_chart_collaborators
     type: number
-    sql: ${patients_patientproviderteammember.id}
-    
+    sql: ${custom_collaborators_by_patient_id.NumberOfCollaborators}    
+  
+
 #   - dimension_group: chart_created
 #     type: time
 #     timeframes: [date, month, year]
 #     sql: ${auditlogging_actionlog.record}
-
-  - measure: provider_team_size
-    type: count_distinct 
-    sql: ${patients_patientproviderteammember.id}
 
   - measure: patient_count
     type: count_distinct 

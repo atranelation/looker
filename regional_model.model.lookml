@@ -70,16 +70,6 @@
     relationship: one_to_one
     sql_on: ${patients_patient.id} = ${patients_practicetopatient.patient_id}
     fields: []
-  - join: patients_patientproviderteam
-    type: left_outer
-    relationship: one_to_one
-    sql_on: ${patients_practicetopatient.id} = ${patients_patientproviderteam.practice_to_patient_id}
-    fields: []
-  - join: patients_patientproviderteammember
-    type: left_outer
-    relationship: many_to_one
-    sql_on: ${patients_patientproviderteammember.team_id} = ${patients_patientproviderteam.id}
-    fields: []
   - join: practicians_physician
     type: left_outer
     relationship: many_to_one
@@ -100,7 +90,12 @@
     relationship: many_to_one
     sql_on: ${entities_practice.id} = ${patients_practicetopatient.practice_id}
     fields: []
-
+  - join: custom_collaborators_by_patient_id
+    type: left_outer
+    relationship: one_to_one
+    sql_on: ${patients_patient.id} = ${custom_collaborators_by_patient_id.patient_id}
+    fields: []
+  
 
 
   

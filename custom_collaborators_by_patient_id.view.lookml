@@ -19,4 +19,3 @@
 
     - measure: chart_count
       type: count
-      sql: ${patient_id}
