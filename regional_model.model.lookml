@@ -101,17 +101,7 @@
     sql_on: ${entities_practice.id} = ${patients_practicetopatient.practice_id}
     fields: []
 
-- explore: patient_teamsize
 
-
-- view: patient_teamsize
-  derived_table:
-    sql:
-      SELECT team_id, COUNT(*) AS teamsize
-        FROM patients_patientproviderteammember
-          GROUP BY team_id
-    sql_trigger_value: SELECT CURDATE()
-    indexes: [team_id]
 
   
 
