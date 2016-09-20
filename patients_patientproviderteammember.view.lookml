@@ -53,4 +53,9 @@
   - measure: count
     type: count
     drill_fields: [id]
+    
+  - measure: avergae
+    type: average
+    sql: average(count(${TABLE}.id))
+    drill_fields: [id]
 
