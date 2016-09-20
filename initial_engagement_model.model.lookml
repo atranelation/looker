@@ -94,10 +94,14 @@
     timeframes: [time, date, month]
     sql: ${TABLE}.recordDate
     
-  - dimension_group: visit_note
+  - dimension_group: created
     type: time
     timeframes: [time, date, month]
     sql: ${TABLE}.document_date
+
+  - dimension: signed_same_day
+    type: yesno
+    sql: TIMESTAMPDIFF(DAY, ${created_date}, ${signed_date})=0
 
   - dimension: source
     type: string
