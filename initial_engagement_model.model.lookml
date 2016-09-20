@@ -101,7 +101,7 @@
 
   - dimension: source
     type: string
-    sql: CASE WHEN ${TABLE}.from_import = 0 THEN 'physician used Elation'ELSE
+    sql: CASE WHEN ${TABLE}.from_import = 0 THEN 'physician used Elation'
               WHEN ${TABLE}.from_import = 1 THEN 'Elation imported'
               ELSE 'unknown'
               END
@@ -141,7 +141,7 @@
     
   - dimension: app_type
     type: string
-    sql: ${entities_practice.app_type}    
+    sql: ${entities_practice.app_type}
     
   - measure: visit_notes_count
     type: count

@@ -95,8 +95,15 @@
     relationship: one_to_one
     sql_on: ${patients_patient.id} = ${custom_collaborators_by_patient_id.patient_id}
     fields: []
-  
 
+- explore: practicians_canonicalphysician
+  label: EPN by Region
+  joins:
+  - join: shareable_medicalspecialty
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${shareable_medicalspecialty.id} = ${practicians_canonicalphysician.specialty_id}
+    fields: []
 
   
 
