@@ -226,7 +226,9 @@
   
   - dimension: number_of_chart_collaborators
     type: number
-    sql: ${custom_collaborators_by_patient_id.NumberOfCollaborators}    
+    sql: CASE WHEN ${custom_collaborators_by_patient_id.NumberOfCollaborators} IS NULL THEN 0
+              ELSE ${custom_collaborators_by_patient_id.NumberOfCollaborators}
+            END
   
 
 #   - dimension_group: chart_created
