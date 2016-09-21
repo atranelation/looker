@@ -518,8 +518,8 @@
         rlrg.id IS NOT NULL AS `contains_lab_values`
         FROM reports_report rr 
           JOIN patients_document pd ON pd.id = rr.doc_id 
-          JOIN auditlogging_actionlog al1 on al1.id = pd.createLog_id 
-          JOIN auditlogging_actionlog al2 on al2.id = pd.signLog_id 
+          JOIN auditlogging_actionlog al1 on al1.id = pd.createLog_id AND al1.actionType = 'create' AND al1.RecordClass = 'Report'
+          JOIN auditlogging_actionlog al2 on al2.id = pd.signLog_id  AND al2.actionType = 'sign' AND al1.RecordClass = 'Report'
           LEFT JOIN reports_labresultgrid rlrg on rlrg.labReport_id = pd.id 
     sql_trigger_value: SELECT CURDATE()
     indexes: [create_date, sign_date, report_date]
