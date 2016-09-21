@@ -58,7 +58,7 @@
     fields: []
 
 - explore: patients_patient
-  label: Patients
+  label: Patient Charts
   joins: 
   - join: patients_patientaddress
     type: inner
