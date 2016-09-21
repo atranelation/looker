@@ -105,8 +105,6 @@
     sql_on: ${shareable_medicalspecialty.id} = ${practicians_canonicalphysician.specialty_id}
     fields: []
     
-- explore: custom_collaborators_by_patient_id
-
 
 
 # # Select the views that should be a part of this model,
