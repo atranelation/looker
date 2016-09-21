@@ -10,7 +10,7 @@
     type: left_outer
     relationship: many_to_one 
     sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
-    fields: [app_type, emr_type, practice_name]
+    fields: []
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 
@@ -104,8 +104,9 @@
     relationship: many_to_one
     sql_on: ${shareable_medicalspecialty.id} = ${practicians_canonicalphysician.specialty_id}
     fields: []
+    
+- explore: custom_collaborators_by_patient_id
 
-  
 
 
 # # Select the views that should be a part of this model,
