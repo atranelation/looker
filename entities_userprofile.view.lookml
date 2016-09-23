@@ -46,7 +46,7 @@
 
   - dimension: practice_id
     type: number
-    sql: ${entities_practice.id}
+    sql: ${TABLE}.practice_id
 
   - dimension_group: timecredentialed
     type: time
