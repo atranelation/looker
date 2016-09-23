@@ -810,7 +810,7 @@
     practice_and_provider_info: [practice_info*, provider_info*]
   derived_table:
     sql: 
-      SELECT pd.id AS letter_id, pd.authoring_practice_id AS practice_id, alal.recordDate AS sign_date, ll.send_to_patient AS `to_patient`, ll.deliver_method AS deliver_method, ll.fax_attachments AS fax_attachments, 
+      SELECT pd.id AS letter_id, pd.authoring_practice_id AS practice_id, alal.recordDate AS sign_date, ll.send_to_patient AS `to_patient`, ll.delivery_method AS delivery_method, ll.fax_attachments AS fax_attachments, 
           ll.referral_order_id IS NOT NULL AS `is_referral`, ep.emr_type = 'passport' AS `is_from_patient`,  alal.user_id
         FROM letters_letter ll 
           JOIN patients_document pd ON pd.id = ll.doc_id 
@@ -836,9 +836,9 @@
     type: yesno
     sql: ${TABLE}.to_patient
     
-  - dimension: deliver_method
+  - dimension: delivery_method
     type: string
-    sql: ${TABLE}.deliver_method
+    sql: ${TABLE}.delivery_method
     
   - dimension: fax_attachments
     type: yesno
