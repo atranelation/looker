@@ -52,6 +52,21 @@
     relationship: many_to_one
     sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
     fields: []
+  - join: patients_patient
+    type: inner
+    relationship: one_to_one
+    sql_on: ${patients_patient.id} = ${signed_visits.patient_id}
+    fields: []
+  - join: patients_patientaddress
+    type: inner
+    relationship: one_to_one
+    sql_on: ${patients_patient.id} = ${patients_patientaddress.patient_id}
+    fields: []
+  - join: patients_practicetopatient
+    type: left_outer
+    relationship: one_to_one
+    sql_on: ${patients_patient.id} = ${patients_practicetopatient.patient_id}
+    fields: []
 
 - view: signed_visits
   sets: 
@@ -60,12 +75,12 @@
     practice_and_provider_info: [practice_info*, provider_info*]
   derived_table:
     sql:
-      SELECT recordDate, d.id AS documentID, a.user_id AS user_id, d.documentDate As document_date, page_session LIKE 'import%' AS from_import
+      SELECT recordDate, d.id AS documentID, a.user_id AS user_id, d.documentDate As document_date, page_session LIKE 'import%' AS from_import, d.patient_id AS patient_id
         FROM patients_document d
         LEFT JOIN auditlogging_actionlog a on d.signLog_id=a.id 
           WHERE d.document_type=24 AND d.deleteLog_id is NULL AND a.actionType= 'sign' AND a.recordClass = 'VisitNote'
     sql_trigger_value: SELECT CURDATE()
-    indexes: [recordDate, user_id, documentID]
+    indexes: [recordDate, user_id, patient_id, documentID]
 
   fields:
   - dimension: documentID
@@ -77,6 +92,10 @@
   - dimension: user_id
     type: number                 
     sql: ${TABLE}.user_id
+    
+  - dimension: patient_id
+    type: number                 
+    sql: ${TABLE}.patient_id    
     
   - dimension: practice_id
     type: number                 
@@ -147,11 +166,38 @@
     type: string
     sql: ${entities_practice.app_type}
     
+  - dimension: patient_state
+    type: string
+    map_layer: us_states
+    sql: ${patients_patientaddress.state}
+    
+  - dimension: patient_city
+    type: string
+    sql: ${patients_patientaddress.city}
+    
+  - dimension: patient_ZIP
+    type: zipcode
+    map_layer: us_zipcode_tabulation_areas
+    sql: ${patients_patientaddress.zip}  
+  
+  - dimension: patient_age
+    type: number
+    sql: ${patients_patient.age}  
+
+  - dimension: patient_sex
+    type: string
+    sql: ${patients_patient.sex}  
+
   - measure: visit_notes_count
     type: count
     drill_fields: practice_and_provider_info*
-  
-  - measure: unique_user_count
+
+  - measure: unique_patient_count
+    type: count_distinct
+    sql: ${TABLE}.patient_id
+    drill_fields: patient_age, patient_city, patient_state, patient_sex
+
+  - measure: unique_provider_count
     type: count_distinct
     sql: ${TABLE}.user_id
     drill_fields: practice_and_provider_info*
