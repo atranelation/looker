@@ -385,7 +385,7 @@
     type: left_outer
     relationship: many_to_one 
     sql_on: ${entities_practice.id} = ${entities_userprofile.practice_id}
-    fields: [app_type, emr_type, practice_name]
+    fields: []
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 

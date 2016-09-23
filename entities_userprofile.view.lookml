@@ -45,9 +45,8 @@
 #     sql: ${TABLE}.optEmailWeekly
 
   - dimension: practice_id
-    hidden: true
     type: number
-    sql: ${TABLE}.practice_id
+    sql: ${entities_practice.id}
 
   - dimension_group: timecredentialed
     type: time
