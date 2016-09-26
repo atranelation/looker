@@ -71,6 +71,9 @@
   - dimension: practice_name 
     sql: ${entities_practice.practice_name}
   
+  - dimension: practice_address
+    sql: ${entities_practice.address}
+  
   - dimension: practice_city
     sql: ${entities_practice.city}
     
