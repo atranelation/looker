@@ -130,7 +130,7 @@
            WHEN ${entities_practice.app_type} = 'access' OR ${entities_practice.emr_type} = 'passport' THEN 'provider passport'
            WHEN ${entities_practice.app_type} = 'passport' THEN 'patient'
            WHEN WHEN ${TABLE}.is_elation_staff = 0 AND ${TABLE}.time_credentialed IS NULL OR ${TABLE}.time_email_verified IS NULL AND ${entities_practice.app_type} = 'emr' AND ${entities_practice.emr_type} = 'practicing' 
-            AND ${auth_user.is_staff} = 0 AND ${auth_user.is_active} = 1 AND ${practicians_practicetophysician.account_type} = 'regular' THEN 'un-actived paid provider'
+            AND ${auth_user.is_staff} = 0 AND ${practicians_practicetophysician.account_type} = 'regular' THEN 'un-actived paid provider'
         ELSE NULL
       END
 
