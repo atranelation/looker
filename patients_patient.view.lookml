@@ -84,6 +84,7 @@
     sql: ${TABLE}.master_id
     
   - dimension: master_patient_id
+    hidden: true
     type: number
     sql: CASE WHEN ${TABLE}.master_id IS NOT NULL THEN ${TABLE}.master_id
           ELSE ${TABLE}.id
