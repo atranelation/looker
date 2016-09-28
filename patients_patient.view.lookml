@@ -80,7 +80,6 @@
     sql: ${TABLE}.maritalStatus
 
   - dimension: master_id
-    hidden: true
     type: number
     sql: ${TABLE}.master_id
     
