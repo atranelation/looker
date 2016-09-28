@@ -129,6 +129,7 @@
            WHEN ${entities_practice.app_type} = 'passport' THEN 'patient'
            WHEN ${TABLE}.is_elation_staff = 0 AND ${TABLE}.time_credentialed IS NOT NULL AND ${entities_practice.app_type} = 'emr' AND ${entities_practice.emr_type} = 'practicing' 
             AND ${auth_user.is_staff} = 0 AND ${practicians_practicetophysician.account_type} = 'regular' THEN 'un-actived paid provider'
+           WHEN ${auth_user.is_active} = 0 THEN 'churned user'
         ELSE NULL
       END
 
