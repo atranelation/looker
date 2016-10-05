@@ -561,7 +561,7 @@
   derived_table:
     sql:
       SELECT pd.id, pd.authoring_practice_id, pd.documentDate AS `report_date`, al1.recordDate AS `create_date`, al2.recordDate AS `sign_date`, 
-        rlrg.id IS NOT NULL AS `contains_lab_values`
+        rlrg.id IS NOT NULL AS `contains_lab_values`, rr.vendor_name
         FROM reports_report rr 
           JOIN patients_document pd ON pd.id = rr.doc_id 
           JOIN auditlogging_actionlog al1 on al1.id = pd.createLog_id AND al1.actionType = 'create' AND al1.RecordClass = 'Report'
@@ -598,7 +598,11 @@
   - dimension: contains_lab_values
     type: yesno
     sql: ${TABLE}.contains_lab_values
-    
+
+  - dimension: vendor_name
+    type: string
+    sql: ${TABLE}.vendor_name
+
   - dimension: practice_name 
     sql: ${entities_practice.practice_name}
     
