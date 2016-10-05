@@ -808,13 +808,14 @@
   - join: entities_userprofile
     type: left_outer
     relationship: many_to_one
-    sql_on: ${letters.user_id} = ${entities_userprofile.user_id}
+    sql_on: ${letters.sender_user_id} = ${entities_userprofile.user_id}
     fields: []
-  - join: entities_practice
+  - join: sender_entities_practice
+    from: entities_practice
     type: left_outer
     relationship: many_to_one 
     fields: []
-    sql_on: ${entities_practice.id} = ${letters.practice_id}
+    sql_on: ${sender_entities_practice.id} = ${letters.sender_practice_id}
   - join: practicians_officestaff
     type: left_outer
     relationship: many_to_one 
@@ -831,10 +832,11 @@
     relationship: many_to_one
     sql_on: ${practicians_physician.id} = ${entities_userprofile.id}
     fields: []
-  - join: practicians_practicetophysician
+  - join: sender_practicians_practicetophysician
+    from: practicians_practicetophysician
     type: left_outer
     relationship: many_to_one
-    sql_on: ${practicians_practicetophysician.physician_id} = ${entities_userprofile.id} AND ${practicians_practicetophysician.practice_id} = ${entities_userprofile.practice_id} 
+    sql_on: ${sender_practicians_practicetophysician.physician_id} = ${entities_userprofile.id} AND ${sender_practicians_practicetophysician.practice_id} = ${entities_userprofile.practice_id} 
     fields: []
   - join: shareable_medicalspecialty
     type: left_outer
@@ -845,14 +847,25 @@
     from: auth_user
     type: left_outer
     relationship: many_to_one
-    sql_on: ${entities_practice.current_impl_manager_id} = ${implementation_manager.id}
+    sql_on: ${sender_entities_practice.current_impl_manager_id} = ${implementation_manager.id}
     fields: []
   - join: entities_enterprise
     type: left_outer
     relationship: many_to_one
-    sql_on: ${entities_enterprise.id} = ${entities_practice.enterprise_id}
+    sql_on: ${entities_enterprise.id} = ${sender_entities_practice.enterprise_id}
     fields: []
-    
+  - join: receiver_entities_practice
+    from: entities_practice
+    type: left_outer
+    relationship: many_to_one 
+    fields: []
+    sql_on: ${receiver_entities_practice.id} = ${receiver_practicians_practicetophysician.practice_id}
+  - join: receiver_practicians_practicetophysician
+    from: practicians_practicetophysician
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${receiver_practicians_practicetophysician.physician_id} = ${letters.receiving_physician_id} 
+
 - view: letters
   sets: 
     practice_info: [practice_id, practice_name, practice_specialty, enterprise, practice_city, practice_state, emr_type, app_type]
@@ -861,7 +874,7 @@
   derived_table:
     sql: 
       SELECT pd.id AS letter_id, pd.authoring_practice_id AS practice_id, alal.recordDate AS sign_date, ll.send_to_patient AS `to_patient`, ll.delivery_method AS delivery_method, ll.fax_attachments AS fax_attachments, 
-          ll.referral_order_id IS NOT NULL AS `is_referral`, ep.emr_type = 'passport' AS `is_from_patient`,  alal.user_id
+          ll.referral_order_id IS NOT NULL AS `is_referral`, ep.emr_type = 'passport' AS `is_from_patient`,  alal.user_id, ll.send_to_physician_id
         FROM letters_letter ll 
           JOIN patients_document pd ON pd.id = ll.doc_id 
           JOIN auditlogging_actionlog alal ON alal.id = pd.signLog_id 
@@ -885,7 +898,7 @@
   - dimension: to_patient
     type: yesno
     sql: ${TABLE}.to_patient
-    
+  
   - dimension: delivery_method
     type: string
     sql: ${TABLE}.delivery_method
@@ -902,58 +915,70 @@
     type: yesno
     sql: ${TABLE}.is_from_patient  
 
-  - dimension: practice_id 
+  - dimension: sender_practice_id 
     type: number
     sql: ${TABLE}.practice_id
 
-  - dimension: practice_name 
+  - dimension: sender_practice_name 
     type: string
-    sql: ${entities_practice.practice_name}
+    sql: ${sender_entities_practice.practice_name}
     
-  - dimension: practice_specialty
+  - dimension: sender_practice_specialty
     type: string
-    sql: ${entities_practice.specialty}
+    sql: ${sender_entities_practice.specialty}
     
-  - dimension: enterprise
+  - dimension: sender_enterprise
     type: string
     sql: ${entities_enterprise.name}
 
-  - dimension: practice_state
+  - dimension: sender_practice_state
     type: string
     map_layer: us_states
-    sql: ${entities_practice.state}
+    sql: ${sender_entities_practice.state}
     
-  - dimension: practice_city
+  - dimension: sender_practice_city
     type: string
-    sql: ${entities_practice.city}
+    sql: ${sender_entities_practice.city}
     
-  - dimension: practice_ZIP
+  - dimension: sender_practice_ZIP
     type: zipcode
     map_layer: us_zipcode_tabulation_areas
-    sql: ${entities_practice.zip}    
+    sql: ${sender_entities_practice.zip}    
     
-  - dimension: emr_type
+  - dimension: sender_emr_type
     type: string
-    sql: ${entities_practice.emr_type}    
+    sql: ${sender_entities_practice.emr_type}    
     
-  - dimension: app_type
+  - dimension: sender_app_type
     type: string
-    sql: ${entities_practice.app_type}    
+    sql: ${sender_entities_practice.app_type}    
 
-  - dimension: user_id
+  - dimension: sender_user_id
     type: number
     sql:  ${TABLE}.user_id
 
-  - dimension: provider_name
+  - dimension: sender_provider_name
     sql: CONCAT(${practicians_physician.first_name}, ' ', ${practicians_physician.last_name})  
   
-  - dimension: provider_specialty
+  - dimension: sender_provider_specialty
     sql: ${shareable_medicalspecialty.name}
     
-  - dimension_group: provider_credentialed
+  - dimension_group: sender_provider_credentialed
     type: time
     timeframes: [time, date, week, month]
     sql: ${entities_userprofile.timecredentialed_date}
+
+  - dimension: receiving_physician_id
+    type: number
+    sql: ${TABLE}.send_to_physician_id
+
+  - dimension: receiver_emr_type
+    type: string
+    sql: ${receiver_entities_practice.emr_type}    
+    
+  - dimension: receiver_app_type
+    type: string
+    sql: ${receiver_entities_practice.app_type}    
 
   - measure: report_count
     label: letter_count
