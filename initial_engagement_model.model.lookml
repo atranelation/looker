@@ -993,6 +993,11 @@
     type: count_distinct
     sql: ${TABLE}.user_id
     drill_fields: practice_and_provider_info*
+    
+  - measure: unique_recipient_count
+    type: count_distinct
+    sql: ${TABLE}.send_to_physician_id
+    drill_fields: practice_and_provider_info*
 
   - measure: unique_practice_count
     type: count_distinct
